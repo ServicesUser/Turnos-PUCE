@@ -1,14 +1,30 @@
-
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
-// Variables
-@import "variables";
-
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+//font awesome
+@import "~font-awesome/css/font-awesome.css";
+
+//animate css
+@import "~animate.css/animate.css";
+
+//simple-line-icons
+@import "~simple-line-icons/scss/simple-line-icons.scss";
+
+//bootstrap-select
+@import "~bootstrap-select/sass/bootstrap-select.scss";
+
+//bootstrap-switch
+@import "~bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css";
+
+//daterangepicker
+@import "~daterangepicker/daterangepicker.scss";
+
+//toast
+@import "~toastr/toastr";
+
+@import "../tema/global/css/components.css";
+@import "../tema/global/css/plugins.css";
+
+@import "variables.scss";
+@import "../tema/layouts/layout2/sass/estudiante";
+

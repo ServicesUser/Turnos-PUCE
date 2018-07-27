@@ -8,12 +8,6 @@ window.Popper = require('popper.js').default;
  * code may be modified to fit the specific needs of your application.
  */
 
-try {
-    window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap');
-} catch (e) {}
-
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -22,7 +16,30 @@ try {
 
 window.axios = require('axios');
 
+moment.locale('es');
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+
+window.toastr = require('toastr');
+window.toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+};
+
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
