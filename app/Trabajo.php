@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Dia extends Model
+class Trabajo extends Model
 {
-    protected $primaryKey   =   "id_di";
+    protected $table        =   "horario_trabajo";
     public $timestamps      =   false;
-
 }
