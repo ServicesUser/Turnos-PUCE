@@ -12,7 +12,7 @@
             <img :src="ruta+'/images/logo_puce_blanco.png'" alt="Logo PUCE">
         </a>
         <div class="topbar-actions">
-            <notificaciones></notificaciones>
+            <notificaciones :usuario="datos.user" :l="datos.notificaciones"></notificaciones>
             <div class="btn-group-red btn-group">
                 <button type="button" class="btn btn-sm md-skip" >
                     <i class="fa fa-list-ul"></i>
@@ -59,7 +59,6 @@
                         if(response.data){
                             this.datos=response.data;
                             this.cargado=true;
-                            Bus.$emit('cargar-notificaciones',response.data.notificaciones);
                             Bus.$emit('cargar-menu',response.data.menu);
                         }
                     });
