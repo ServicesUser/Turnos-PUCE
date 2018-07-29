@@ -20,6 +20,8 @@ Vue.component('notificaciones', require('./components/notificaciones'));
 Vue.component('opciones', require('./components/opciones'));
 Vue.component('pie', require('./components/pie'));
 
+Vue.component('est-cal', require('./components/est-cal'));
+
 
 const app = new Vue({
     el: '#app'

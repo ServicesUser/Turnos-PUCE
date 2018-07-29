@@ -4,7 +4,7 @@
 <!--[if !IE]><!-->
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>{{config('app.name')}} @yield('titulo')</title>
+    <title>{{config('app.name')}} | @yield('titulo')</title>
     <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

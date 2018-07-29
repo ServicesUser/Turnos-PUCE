@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="copyright">{{anio}} &copy; Turnero PUCE By
+        <p class="copyright">{{anio}} &copy; Turnos PUCE By
             <a target="_blank" href="https://www.puce.edu.ec/">PUCE</a>
         </p>
         <a href="javascript:;" class="go2top">
