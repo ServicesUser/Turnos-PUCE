@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="copyright"> 2016 &copy; Metronic Theme By
+        <p class="copyright">{{anio}} &copy; Turnero PUCE By
             <a target="_blank" href="https://www.puce.edu.ec/">PUCE</a>
         </p>
         <a href="javascript:;" class="go2top">
@@ -11,7 +11,12 @@
 
 <script>
     export default {
-        name: "pie"
+        name: "pie",
+        computed:{
+            anio:function(){
+                return moment().format('YYYY');
+            }
+        }
     }
 </script>
 
