@@ -1,23 +1,22 @@
 <template>
-    <div class="btn-group-notification btn-group" >
+    <div class="btn-group-notification btn-group" v-if="cargado">
         <button type="button" class="btn btn-sm md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
             <i class="icon-bell"></i>
-            <span class="badge">12</span>
+            <span class="badge">{{lista.length}}</span>
         </button>
-        <ul class="dropdown-menu-v2">
+        <ul class="dropdown-menu-v2" v-if="lista.length>0">
             <li class="external">
-                <h3><span class="bold">12</span> notificaciones</h3>
+                <h3><span class="bold">{{lista.length}}</span> notificaciones</h3>
                 <a href="#">ver todas</a>
             </li>
             <li>
                 <ul class="dropdown-menu-list scroller" style="height: 250px; padding: 0;" data-handle-color="#637283">
-                    <li>
-                        <a href="javascript:;">
+                    <li v-for="item in lista">
+                        <a :href="item.url ? item.url : '#'">
                             <span class="details">
-                                <span class="label label-sm label-icon label-success md-skip">
-                                    <i class="fa fa-plus"></i>
-                                </span> New user registered. </span>
-                            <span class="time">just now</span>
+                                <span class="label label-sm label-icon label-info md-skip">
+                                </span>{{item.mensaje}}</span>
+                            <span class="time">{{item.fecha}}</span>
                         </a>
                     </li>
                 </ul>
@@ -27,8 +26,19 @@
 </template>
 
 <script>
+    import {Bus} from '../app';
     export default {
-        name: "notificaciones"
+        name: "notificaciones",
+        data: () => ({
+            lista:[],
+            cargado:false
+        }),
+        mounted(){
+            Bus.$on('cargar-notificaciones',function(menu){
+                this.lista=menu;
+                this.cargado=true;
+            }.bind(this));
+        }
     }
 </script>
 

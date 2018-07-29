@@ -22,6 +22,7 @@ Vue.component('pie', require('./components/pie'));
 
 Vue.component('est-cal', require('./components/est-cal'));
 
+export let Bus = new Vue();
 
 const app = new Vue({
     el: '#app'

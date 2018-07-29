@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Jenssegers\Date\Date;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -18,9 +19,10 @@ class HomeController extends Controller
 
     public function main(){
         return ([
-            'user'      =>  Auth::user(),
-            'logout'    =>  route('logout'),
-            'menu'      =>  ['historial'=>route('home'),'horario'=>route('turnos.horarios'),'citas'=>route('turnos.citas')],
+            'user'              =>  Auth::user(),
+            'notificaciones'    =>  $this->notifiaciones(),
+            'logout'            =>  route('logout'),
+            'menu'              =>  ['historial'=>route('home'),'horarios'=>route('turnos.horarios'),'citas'=>route('turnos.citas')],
         ]);
     }
 
