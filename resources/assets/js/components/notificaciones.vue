@@ -34,6 +34,14 @@
         }),
         props:['l','usuario'],
         methods:{
+            cargarNotificaciones:function(){
+                axios.get(window.location.origin+'/app/basic')
+                    .then((response) => {
+                        if(response.data){
+                            this.lista=response.data.notificaciones;
+                        }
+                    });
+            },
             montarPush:function(){
                 Echo.private('App.User.'+this.usuario.id)
                     .notification((e) => {
