@@ -1,23 +1,25 @@
-@extends('layouts.app')
+@extends('template.app')
+@section('cuerpo')
+    <div class="wrapper">
+        <header class="page-header">
+            <nav class="navbar mega-menu" role="navigation">
+                <div class="container-fluid">
+                    <cabeza></cabeza>
+                    <menu></menu>
+                </div>
+            </nav>
+        </header>
+        <div class="container-fluid">
+            <div class="page-content">
+                <div class="breadcrumbs">
+                    <h1>Admin Dashboard 2</h1>
+                </div>
+                <div class="row">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
                 </div>
             </div>
+            <pie></pie>
         </div>
     </div>
-</div>
 @endsection
