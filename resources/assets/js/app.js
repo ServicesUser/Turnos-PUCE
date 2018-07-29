@@ -17,7 +17,8 @@ window.Vue = require('vue');
 
 Vue.component('cabeza', require('./components/cabeza'));
 Vue.component('notificaciones', require('./components/notificaciones'));
-Vue.component('menu', require('./components/menu'));
+Vue.component('opciones', require('./components/opciones'));
+Vue.component('pie', require('./components/pie'));
 
 
 const app = new Vue({

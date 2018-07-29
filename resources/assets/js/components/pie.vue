@@ -3,7 +3,7 @@
         <p class="copyright"> 2016 &copy; Metronic Theme By
             <a target="_blank" href="https://www.puce.edu.ec/">PUCE</a>
         </p>
-        <a href="#index" class="go2top">
+        <a href="javascript:;" class="go2top">
             <i class="icon-arrow-up"></i>
         </a>
     </div>

@@ -16,10 +16,10 @@
                     <i class="icon-puzzle"></i> Turnos
                 </a>
                 <ul class="dropdown-menu dropdown-menu-fw">
-                    <li class="active">
+                    <li class="">
                         <a href="index.html">Horario Atención</a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="index.html">Citas</a>
                     </li>
                 </ul>
@@ -31,6 +31,7 @@
 <script>
     export default {
         name: "opciones"
+
     }
 </script>
 

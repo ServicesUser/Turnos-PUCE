@@ -5,7 +5,7 @@
             <nav class="navbar mega-menu" role="navigation">
                 <div class="container-fluid">
                     <cabeza></cabeza>
-                    <menu></menu>
+                    <opciones></opciones>
                 </div>
             </nav>
         </header>
