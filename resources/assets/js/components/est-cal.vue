@@ -1,5 +1,11 @@
 <template>
-    <vue-event-calendar :events="demoEvents" title="te convence"></vue-event-calendar>
+    <vue-event-calendar :events="demoEvents">
+        <template slot-scope="props">
+            <div v-for="(event, index) in props.showEvents" class="event-item">
+                {{event}}
+            </div>
+        </template>
+    </vue-event-calendar>
 </template>
 <script>
     import 'vue-event-calendar/dist/style.css';
@@ -10,13 +16,12 @@
         data () {
             return {
                 demoEvents: [{
-                    date: '2018/07/28', // Required
+                    date: '2018/07/25 16:28:52', // Required
                     title: 'Foo' // Required
                 }, {
                     date: '2016/12/15',
                     title: 'Bar',
-                    desc: 'description',
-                    customClass: 'disabled highlight' // Custom classes to an calendar cell
+                    desc: 'description'
                 }]
             }
         }

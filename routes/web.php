@@ -19,4 +19,12 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/inicio', 'HomeController@index')->name('home');
+    Route::get('/turnos/horario', 'HomeController@index')->name('turnos.horarios');
+    Route::get('/turnos/citas', 'HomeController@index')->name('turnos.citas');
+
+    Route::prefix('app')->group(function () {
+        Route::get('basic','HomeController@main');
+    });
 });
+
+
