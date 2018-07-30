@@ -27,7 +27,7 @@ class EstudianteController extends Controller
         }else{
             $a                      =   json_decode ($datos->estudiante);
             $aux                    =   Estudiante::where('cedula_es',$a->cedula_es)->first();
-            $aux->email_es          =   $datos->email;
+            $aux->email_es          =   strtolower($datos->email);
             $aux->validado_es       =   true;
             $aux->save();
             return (['val'=>true,'mensaje'=>"Se ha actualizado su correo electrónico"]);

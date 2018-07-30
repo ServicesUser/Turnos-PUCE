@@ -14,6 +14,9 @@ class Horario extends Model
     protected $with             =   ['dia','responsable'];
 
 
+    public function turnos(){
+        return $this->hasMany(Turno::class,'id_ho','id_ho');
+    }
 
     public function dia(){
         return $this->belongsTo(Dia::class,'id_di','id_di');

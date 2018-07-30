@@ -26,8 +26,11 @@ Route::middleware(['auth'])->group(function (){
         Route::post('/','HorariosCOntroller@nuevoHorario');
     });
 
+    Route::prefix('/turnos/citas')->group(function () {
+        Route::get('/', 'HomeController@citas')->name('turnos.citas');
+        Route::options('/','CitasController@cola');
+    });
 
-    Route::get('/turnos/citas', 'HomeController@citas')->name('turnos.citas');
 
     Route::prefix('app')->group(function () {
         Route::get('basic','HomeController@main');
