@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-6 col-md-offset-3" v-if="pasos===4">
             <div class="portlet light portlet-fit portlet-form bordered">
-                <div class="portlet-body">
+                <div class="portlet-body" v-if="cargando">>
                     <div class="alert text-center" :class="mensaje.tipo" v-html="mensaje.texto"></div>
                     <div class="mt-widget-3">
                         <div class="mt-head bg-green">
@@ -73,11 +73,16 @@
                             </div>
                             <div class="mt-head-desc"><b>Su turno es a las {{turno.inicio_tu}}</b> <br>Recuerde estar 10 minutos antes</div>
                             <span class="mt-head-date">{{fechaCompleta}}</span>
-                            <div class="mt-head-button" v-if="cargando">
+                            <div class="mt-head-button" >
                                 <!--<button type="button" class="btn btn-circle btn-outline white btn-sm">Add</button>-->
                                 <h3>{{turno.horario.responsable.cubiculo.detalle_cu ? turno.horario.responsable.cubiculo.detalle_cu :turno.atendido.cubiculo.detalle_cu}}</h3>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="portlet-body" v-else>
+                    <div class="text-center">
+                        <h3 class="text-info">Cargando </h3>
                     </div>
                 </div>
             </div>

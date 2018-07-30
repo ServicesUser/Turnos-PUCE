@@ -24,6 +24,9 @@
                 axios({
                     method: 'GET',
                     url:location.origin+'/api/turnos',
+                    params:{
+                        'fecha':moment().format('Y-MM-DD HH:mm:ss'),
+                    }
                 }).then((response) => {
                     this.lista=response.data;
                 }).catch((error) => {
