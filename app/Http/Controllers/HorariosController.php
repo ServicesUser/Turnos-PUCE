@@ -69,6 +69,7 @@ class HorariosController extends Controller{
                         $turno->id_et       =   1;
                         $turno->id_ho       =   $horario->id_ho;
                         $turno->inicio_tu   =   $fInicio->format('H:i:s');
+                        $turno->nu_tu       =   Turno::where('fecha_tu',$dias->fecha_di)->count()+1;
                         $fInicio->add("$duracion minute");
                         $turno->fin_tu      =   $fInicio->format('H:i:s');
                         $turno->fecha_tu    =   $dias->fecha_di;
