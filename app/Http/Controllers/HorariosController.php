@@ -9,11 +9,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Jenssegers\Date\Date;
 
 class HorariosController extends Controller{
 
     public function misHorarios(){
-        return Trabajo::where('id',Auth::user()->id)->latest('creado_ht')->limit(20)->get();
+        $lista  =   Trabajo::where('id',Auth::user()->id)->with('horario')->latest('creado_ht')->limit(20)->get();
+        $aux    =   [];
+        foreach ($lista as $item){
+            $a['texto']     =   Date::createFromFormat('Y-m-d', $item->horario['dia']['fecha_di'])->format('l, d F Y').' de '.$item->horario['inicio_ho'].' a '.$item->horario['fin_ho'];
+            $a['fecha1']    =   $item->creado_ht;
+            $a['fecha2']    =   Date::createFromFormat('Y-m-d H:i:s',$item->creado_ht)->diffForHumans();
+            $aux[]          =   $a;
+        }
+        return $aux;
     }
 
     public function nuevoHorario(Request $datos){

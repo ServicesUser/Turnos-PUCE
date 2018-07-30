@@ -3,7 +3,7 @@
         <div class="portlet-title tabbable-line">
             <div class="caption">
                 <i class="icon-globe font-dark hide"></i>
-                <span class="caption-subject font-dark bold uppercase">Horarios de antención registrados</span>
+                <span class="caption-subject font-dark bold uppercase">Horarios de atención registrados</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -20,14 +20,12 @@
                                             </div>
                                         </div>
                                         <div class="cont-col2">
-                                            <div class="desc">
-                                                You have 4 pending tasks.
-                                            </div>
+                                            <div class="desc">{{item.texto}}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col2">
-                                    <div class="date"> Just now </div>
+                                    <div class="date">{{item.fecha2}}</div>
                                 </div>
                             </li>
                             <li v-if="lista.length===0">
