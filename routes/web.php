@@ -19,7 +19,13 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/inicio', 'HomeController@index')->name('home');
-    Route::get('/turnos/horario', 'HomeController@horarios')->name('turnos.horarios');
+
+    Route::prefix('/turnos/horario')->group(function () {
+        Route::get('/', 'HomeController@horarios')->name('turnos.horarios');
+        Route::options('/','HorariosController@misHorarios');
+    });
+
+
     Route::get('/turnos/citas', 'HomeController@citas')->name('turnos.citas');
 
     Route::prefix('app')->group(function () {

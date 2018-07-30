@@ -334,14 +334,29 @@
 </template>
 
 <script>
+    import {Bus} from '../../app'
     export default {
         name: "horarios",
         data: () => ({
             lista:[],
             cargado:false
         }),
+        methods:{
+            cargar:function(){
+                axios.options(location.origin+location.pathname)
+                    .then((response) => {
+                        this.lista=response.data;
+                        this.cargado=true;
+                    }).catch((error) => {
+                        toastr.error("Ocurrió un error vuelva a cargar la página.", "Error");
+                });
+            }
+        },
         mounted(){
-
+            this.cargar();
+            Bus.$on('cargar-horarios',function(){
+                this.cargar();
+            }.bind(this));
         }
     }
 </script>

@@ -7,14 +7,14 @@
             </div>
         </div>
         <div class="portlet-body from">
-            <form action="#" class="form-horizontal form-bordered">
+            <form action="#" class="form-horizontal form-bordered" v-on:submit.prevent="crearNuevo">
                 <div class="form-body">
                     <div class="form-group">
                         <label class="control-label col-md-3">Día</label>
                         <div class="col-md-9">
                             <div class="input-icon right">
                                 <i class="fa fa-calendar"></i>
-                                <input type="text" size="16" class="form-control" id="fecha">
+                                <input type="text" size="16" class="form-control" id="fecha" name="dia" v-validate="'required'" />
                             </div>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                         <div class="col-md-9">
                             <div class="input-icon right" >
                                 <i class="fa fa-clock-o"></i>
-                                <input type="text" size="5" class="form-control timepicker timepicker-24" id="inicio" value="7:00">
+                                <input type="text" size="5" class="form-control timepicker timepicker-24" name="inicio de jornada" v-validate="'required'" id="inicio" value="7:00">
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                         <div class="col-md-9">
                             <div class="input-icon right" >
                                 <i class="fa fa-clock-o"></i>
-                                <input type="text" size="5" class="form-control timepicker timepicker-24" id="fin" value="17:00"/>
+                                <input type="text" size="5" class="form-control timepicker timepicker-24" name="fin de jornada" v-validate="'required'" id="fin" value="17:00"/>
                             </div>
                         </div>
                     </div>
@@ -48,6 +48,11 @@
 </template>
 
 <script>
+    import VeeValidate,{Validator} from 'vee-validate';
+    import es from 'vee-validate/dist/locale/es';
+    Validator.localize('es',es);
+    Vue.use(VeeValidate);
+    import {Bus} from '../../app'
     export default {
         name: "nuevo-horario",
         data: () => ({
@@ -55,12 +60,51 @@
             inicio:'8:00',
             fin:'17:00',
         }),
+        methods:{
+            crearNuevo(){
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        let inicio=this.inicio.split(':');
+                        let fin=this.fin.split(':');
+                        if(inicio[0]>=moment().format('HH') && fin[0]>inicio[0]){
+                            axios({
+                                method: 'POST',
+                                url:locations.origin+location.pathname,
+                                params: {
+                                    'fecha':this.fecha,
+                                    'inicio':this.inicio,
+                                    'fin':this.fin,
+                                },
+                            }).then((response) => {
+                                if(response.data.val){
+                                    Bus.$emit('cargar-horarios');
+                                    this.fecha='';
+                                    this.inicio='8:00';
+                                    this.inicio='17:00';
+                                    toastr.info(response.data.mensaje, "Éxito");
+                                }else{
+                                    toastr.error(response.data.mensaje, "Error");
+                                }
+                            }).catch((error) => {
+                                toastr.error("Ha ocurrido un error refresque la página", "Error");
+                            });
+
+                        }else{
+                            toastr.error("La Hora debe ser posterior a la actual y la hora de inicio debe ser menor a la hora de fin", "Error");
+                        }
+                    }else {
+                        toastr.error("Complete el formulario", "Error");
+                    }
+                });
+            }
+        },
         mounted(){
             let vm=this;
             $('#fecha').daterangepicker({
                 "singleDatePicker": true,
                 "showCustomRangeLabel": false,
-                "opens": "center"
+                "opens": "center",
+                "minDate": moment(),
             }, function(start, end, label) {
                 vm.fecha=start.format('YYYY-MM-DD');
             });
