@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     27/07/2018 14:56:37                          */
+/* Created on:     29/07/2018 18:53:49                          */
 /*==============================================================*/
 
 
@@ -14,7 +14,9 @@ drop table if exists estudiantes;
 
 drop table if exists historial_turnos;
 
-drop table if exists horario;
+drop table if exists horarios;
+
+drop table if exists horario_trabajo;
 
 drop table if exists notifications;
 
@@ -29,7 +31,7 @@ drop table if exists users;
 /*==============================================================*/
 create table cubiculos
 (
-   id_cu                varchar(5) not null,
+   id_cu                int not null auto_increment,
    detalle_cu           varchar(100),
    codigo_cu            varchar(10),
    primary key (id_cu)
@@ -63,8 +65,10 @@ create table estudiantes
    cedula_es            varchar(10) not null,
    nombres_es           varchar(200),
    apellidos_es         varchar(200),
-   celular_es           varchar(10),
+   celular_es           varchar(50),
    email_es             varchar(200),
+   telefono_es          varchar(50),
+   validado_es          bool default 0,
    primary key (cedula_es)
 );
 
@@ -75,21 +79,31 @@ create table historial_turnos
 (
    id_tu                char(32),
    id_et                int,
+   id                   bigint,
    detalle_ht           varchar(500),
    fecha_ht             timestamp
 );
 
 /*==============================================================*/
-/* Table: horario                                               */
+/* Table: horarios                                              */
 /*==============================================================*/
-create table horario
+create table horarios
 (
    id_ho                char(8) not null,
-   id_us                bigint not null,
    id_di                char(8) not null,
    inicio_ho            time,
    fin_ho               time,
    primary key (id_ho)
+);
+
+/*==============================================================*/
+/* Table: horario_trabajo                                       */
+/*==============================================================*/
+create table horario_trabajo
+(
+   id_ho                char(8) not null,
+   id                   bigint not null,
+   primary key (id_ho, id)
 );
 
 /*==============================================================*/
@@ -130,6 +144,7 @@ create table turnos
    id_us                bigint,
    creado_tu            timestamp default current_timestamp,
    actualizado_tu       timestamp default current_timestamp on update current_timestamp,
+   qa_tu                int,
    primary key (id_tu)
 );
 
@@ -139,14 +154,16 @@ create table turnos
 create table users
 (
    id                   bigint not null auto_increment,
-   id_cu                varchar(5),
+   id_cu                int,
    name                 varchar(300),
    password             char(61),
    remember_token       varchar(100),
    created_at           datetime,
    updated_at           timestamp,
    email                varchar(100),
-   status               bool,
+   status               bool default false,
+   enabled              bool default false,
+   queued               bool,
    primary key (id)
 );
 
@@ -156,11 +173,17 @@ alter table historial_turnos add constraint fk_historial_estado_turno foreign ke
 alter table historial_turnos add constraint fk_historial_turno foreign key (id_tu)
       references turnos (id_tu) on delete restrict on update restrict;
 
-alter table horario add constraint fk_dias_horas foreign key (id_di)
+alter table historial_turnos add constraint fk_usuario_historial foreign key (id)
+      references users (id) on delete restrict on update restrict;
+
+alter table horarios add constraint fk_dias_horas foreign key (id_di)
       references dias (id_di) on delete restrict on update restrict;
 
-alter table horario add constraint fk_usuario_horario foreign key (id_us)
+alter table horario_trabajo add constraint fk_trabajo_1 foreign key (id)
       references users (id) on delete restrict on update restrict;
+
+alter table horario_trabajo add constraint fk_trabajo_2 foreign key (id_ho)
+      references horarios (id_ho) on delete restrict on update restrict;
 
 alter table notifications add constraint fk_usuario_notificaciones foreign key (notifiable_id)
       references users (id) on delete restrict on update restrict;
@@ -172,7 +195,7 @@ alter table turnos add constraint fk_estudiante_turno foreign key (cedula_es)
       references estudiantes (cedula_es) on delete restrict on update restrict;
 
 alter table turnos add constraint fk_generacion_horiarios_turnos foreign key (id_ho)
-      references horario (id_ho) on delete restrict on update restrict;
+      references horarios (id_ho) on delete restrict on update restrict;
 
 alter table turnos add constraint fk_turno_estado foreign key (id_et)
       references estado_turno (id_et) on delete restrict on update restrict;
