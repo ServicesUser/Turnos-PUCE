@@ -78,9 +78,6 @@
                             }).then((response) => {
                                 if(response.data.val){
                                     Bus.$emit('cargar-horarios');
-                                    this.fecha='';
-                                    this.inicio='8:00';
-                                    this.inicio='17:00';
                                     toastr.info(response.data.mensaje, "Éxito");
                                 }else{
                                     toastr.error(response.data.mensaje, "Error");
@@ -100,6 +97,7 @@
         },
         mounted(){
             let vm=this;
+            vm.fecha=moment().format('YYYY-MM-DD');
             $('#fecha').daterangepicker({
                 "singleDatePicker": true,
                 "showCustomRangeLabel": false,
