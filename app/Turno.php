@@ -10,4 +10,5 @@ class Turno extends Model
     public const CREATED_AT =   "creado_tu";
     public const UPDATED_AT =   "actualizado_tu";
     public $incrementing    =   false;
+
 }

@@ -66,7 +66,7 @@
                     if (result) {
                         let inicio=this.inicio.split(':');
                         let fin=this.fin.split(':');
-                        if(inicio[0]>=moment().format('HH') && fin[0]>inicio[0]){
+                        if(parseInt(fin[0])>parseInt(inicio[0])){
                             axios({
                                 method: 'POST',
                                 url:location.origin+location.pathname,
@@ -87,7 +87,7 @@
                             });
 
                         }else{
-                            toastr.error("La Hora debe ser posterior a la actual y la hora de inicio debe ser menor a la hora de fin", "Error");
+                            toastr.error("La Hora debe ser posterior hora de inicio debe ser menor a la hora de fin", "Error");
                         }
                     }else {
                         toastr.error("Complete el formulario", "Error");
