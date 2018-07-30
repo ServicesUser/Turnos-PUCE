@@ -23,6 +23,7 @@ Route::middleware(['auth'])->group(function (){
     Route::prefix('/turnos/horario')->group(function () {
         Route::get('/', 'HomeController@horarios')->name('turnos.horarios');
         Route::options('/','HorariosController@misHorarios');
+        Route::post('/','HorariosCOntroller@nuevoHorario');
     });
 
 
