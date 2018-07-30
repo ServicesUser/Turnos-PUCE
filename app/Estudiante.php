@@ -16,6 +16,11 @@ class Estudiante extends Model
 
     protected $with             =   ['turno'];
 
+    public function routeNotificationForMail($notification)
+    {
+        return $this->email_es;
+    }
+
     public function turno(){
         return $this->belongsTo(Turno::class,'cedula_es','cedula_es');
     }

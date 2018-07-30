@@ -11,15 +11,14 @@ class ConfirmacionTurno extends Notification
 {
     use Queueable;
 
-    private     $datos=null;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($datos)
+    public function __construct()
     {
-        $this->datos=$datos;
+
     }
 
     /**
@@ -42,8 +41,8 @@ class ConfirmacionTurno extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Se ha registrado su reservacion Exitosamente.')
-                    ->line($this->datos);
+                    ->line('Se ha registrado su reservación Exitosamente.')
+                    ->line('s');
     }
 
     /**

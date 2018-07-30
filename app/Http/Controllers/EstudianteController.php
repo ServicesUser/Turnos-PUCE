@@ -82,7 +82,7 @@ class EstudianteController extends Controller
             $estudiante             =   Estudiante::find($a->cedula_es);
 
             $tiene                  =   Turno::with('horario')->with('antendio')->where('cedula_es', $estudiante->cedula_es)->first();
-            Notification::route('mail', $estudiante->email_es)->notify( new ConfirmacionTurno(['turno'=>$tiene]));
+            Notification::send($estudiante, new ConfirmacionTurno());
             return $tiene;
         }
     }
