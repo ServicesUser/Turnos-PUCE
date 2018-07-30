@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     29/07/2018 18:53:49                          */
+/* Created on:     29/07/2018 22:34:16                          */
 /*==============================================================*/
 
 
@@ -15,8 +15,6 @@ drop table if exists estudiantes;
 drop table if exists historial_turnos;
 
 drop table if exists horarios;
-
-drop table if exists horario_trabajo;
 
 drop table if exists notifications;
 
@@ -91,19 +89,11 @@ create table horarios
 (
    id_ho                char(8) not null,
    id_di                char(8) not null,
-   inicio_ho            time,
-   fin_ho               time,
-   primary key (id_ho)
-);
-
-/*==============================================================*/
-/* Table: horario_trabajo                                       */
-/*==============================================================*/
-create table horario_trabajo
-(
-   id_ho                char(8) not null,
    id                   bigint not null,
-   primary key (id_ho, id)
+   inicio_ho            time not null,
+   fin_ho               time not null,
+   creado_ho            timestamp,
+   primary key (id_ho)
 );
 
 /*==============================================================*/
@@ -138,13 +128,16 @@ create table password_resets
 create table turnos
 (
    id_tu                char(32) not null,
-   cedula_es            varchar(10) not null,
+   cedula_es            varchar(10),
    id_et                int not null,
-   id_ho                char(8) not null,
    id_us                bigint,
+   id_ho                char(8),
    creado_tu            timestamp default current_timestamp,
    actualizado_tu       timestamp default current_timestamp on update current_timestamp,
    qa_tu                int,
+   inicio_at            time not null,
+   fin_at               time not null,
+   fecha_at             date not null,
    primary key (id_tu)
 );
 
@@ -179,11 +172,8 @@ alter table historial_turnos add constraint fk_usuario_historial foreign key (id
 alter table horarios add constraint fk_dias_horas foreign key (id_di)
       references dias (id_di) on delete restrict on update restrict;
 
-alter table horario_trabajo add constraint fk_trabajo_1 foreign key (id)
+alter table horarios add constraint fk_usuario_horarios foreign key (id)
       references users (id) on delete restrict on update restrict;
-
-alter table horario_trabajo add constraint fk_trabajo_2 foreign key (id_ho)
-      references horarios (id_ho) on delete restrict on update restrict;
 
 alter table notifications add constraint fk_usuario_notificaciones foreign key (notifiable_id)
       references users (id) on delete restrict on update restrict;
@@ -194,7 +184,7 @@ alter table turnos add constraint fk_atendido foreign key (id_us)
 alter table turnos add constraint fk_estudiante_turno foreign key (cedula_es)
       references estudiantes (cedula_es) on delete restrict on update restrict;
 
-alter table turnos add constraint fk_generacion_horiarios_turnos foreign key (id_ho)
+alter table turnos add constraint fk_horarios_turnos foreign key (id_ho)
       references horarios (id_ho) on delete restrict on update restrict;
 
 alter table turnos add constraint fk_turno_estado foreign key (id_et)
