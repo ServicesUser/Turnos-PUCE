@@ -10,6 +10,8 @@
 </head>
 <body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 @yield('cuerpo')
+@component('componentes.soporte')
+@endcomponent
 @yield('js')
 </body>
 </html>

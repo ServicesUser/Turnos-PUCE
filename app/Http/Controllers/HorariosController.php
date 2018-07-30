@@ -98,4 +98,6 @@ class HorariosController extends Controller{
         return $disponibles;
 
     }
+
 }
+
