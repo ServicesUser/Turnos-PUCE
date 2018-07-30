@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ActualizarTurnero implements ShouldBroadcast
+class Turno implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,9 +20,9 @@ class ActualizarTurnero implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($datos)
+    public function __construct($turno)
     {
-        $this->datos=$datos;
+        $this->datos=$turno;
     }
 
     /**
@@ -32,6 +32,6 @@ class ActualizarTurnero implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('Turnos');
+        return new channel('Turnos');
     }
 }

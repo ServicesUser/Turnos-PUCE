@@ -14,7 +14,7 @@
         <div class="topbar-actions">
             <notificaciones :usuario="datos.user" :l="datos.notificaciones"></notificaciones>
             <div class="btn-group-red btn-group">
-                <button type="button" class="btn btn-sm md-skip" >
+                <button type="button" class="btn btn-sm md-skip" v-on:click="turnero">
                     <i class="fa fa-list-ul"></i>
                 </button>
             </div>
@@ -30,7 +30,7 @@
                     </li>
                     <li class="divider"> </li>
                     <li>
-                        <a href="#">
+                        <a href="#salir" v-on:click="salir">
                             <i class="icon-key"></i> Cerrar sesión </a>
                     </li>
                 </ul>
@@ -53,6 +53,12 @@
             }
         },
         methods:{
+            salir:function(){
+                axios.post(location.origin+'/logout')
+                    .then((response) => {
+                        location.href=location.origin+'/login';
+                    });
+            },
             cargar:function(){
                 axios.get(window.location.origin+'/app/basic')
                     .then((response) => {
@@ -63,6 +69,9 @@
                         }
                     });
 
+            },
+            turnero:function(){
+                window.open(location.origin+'/cola', "", "width=600,height=600");
             }
         },
         created(){

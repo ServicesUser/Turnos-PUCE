@@ -38,5 +38,5 @@ Route::middleware(['auth'])->group(function (){
     });
 });
 
-Route::get('dispensador','TurneroController@vista');
+Route::get('cola','TurneroController@vista');
 
