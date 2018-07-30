@@ -91,7 +91,7 @@ class HorariosController extends Controller{
     }
 
     public function disponibles(){
-        $disponibles    =   Turno::select(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y") AS  fecha'),DB::raw('DATE_FORMAT(inicio_tu, "%H:%i") AS inicio'),DB::raw('DATE_FORMAT(fin_tu, "%H:%i") AS  fin'),DB::raw('DATE_FORMAT(CONCAT(fecha_tu," ",inicio_tu), "%Y/%m/%d %H:%i:%s") AS date'),DB::raw('COUNT(id_tu) as cupos'))
+        $disponibles    =   Turno::select(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y") AS  fecha'),DB::raw('DATE_FORMAT(inicio_tu, "%H:%i") AS inicio'),DB::raw('DATE_FORMAT(fin_tu, "%H:%i") AS  fin'),DB::raw('DATE_FORMAT(CONCAT(fecha_tu), "%Y/%m/%d") AS date'),DB::raw('COUNT(id_tu) as cupos'))
                                     ->where('id_et',1)
                                     ->groupBy('inicio_tu','fin_tu','fecha_tu')
                                     ->get();

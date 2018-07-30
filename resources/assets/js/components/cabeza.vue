@@ -24,13 +24,13 @@
                 </button>
                 <ul class="dropdown-menu-v2" role="menu">
                     <li>
-                        <a href="page_user_profile_1.html">
-                            <i class="icon-user"></i> Configuracion
+                        <a href="#">
+                            <i class="icon-user"></i> Configuración
                         </a>
                     </li>
                     <li class="divider"> </li>
                     <li>
-                        <a href="page_user_login_1.html">
+                        <a href="#">
                             <i class="icon-key"></i> Cerrar sesión </a>
                     </li>
                 </ul>
