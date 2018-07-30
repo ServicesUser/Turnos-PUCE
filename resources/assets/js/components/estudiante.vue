@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-6 col-md-offset-3" v-if="pasos===4">
             <div class="portlet light portlet-fit portlet-form bordered">
-                <div class="portlet-body" v-if="cargando">>
+                <div class="portlet-body" v-if="cargando">
                     <div class="alert text-center" :class="mensaje.tipo" v-html="mensaje.texto"></div>
                     <div class="mt-widget-3">
                         <div class="mt-head bg-green">
