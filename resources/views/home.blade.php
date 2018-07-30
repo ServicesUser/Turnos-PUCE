@@ -10,7 +10,6 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <!--BEGIN TABS-->
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1_1">
                         <div class="scroller" style="height: 339px;" data-always-visible="1" data-rail-visible="0">

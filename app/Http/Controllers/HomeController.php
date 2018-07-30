@@ -17,6 +17,14 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function horarios(){
+        return view('horario');
+    }
+
+    public function citas(){
+        return view('citas');
+    }
+
     public function main(){
         return ([
             'user'              =>  Auth::user(),

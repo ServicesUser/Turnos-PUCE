@@ -22,6 +22,10 @@ Vue.component('pie', require('./components/pie'));
 
 Vue.component('est-cal', require('./components/est-cal'));
 
+Vue.component('nuevo-horario', require('./components/operador/nuevo-horario'));
+Vue.component('horarios', require('./components/operador/horarios'));
+Vue.component('citas', require('./components/operador/citas'));
+
 export let Bus = new Vue();
 
 const app = new Vue({
