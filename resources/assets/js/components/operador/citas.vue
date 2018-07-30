@@ -57,7 +57,7 @@
                                         Atendido <i class="fa fa-arrow-right"></i></button>
                                     <button type="button" class="btn btn-danger" v-on:click="cambiar(5,item)">
                                         <i class="fa fa-frown-o"></i> No llegó </button>
-                                    <button type="button" class="btn btn-warning" v-on:click="cambiar(6,item)">
+                                    <button type="button" class="btn btn-warning" v-on:click="cambiar(6,item)" v-if="false">
                                         <i class="fa fa-arrow-up"></i> Transferir</button>
                                 </div>
                             </div>
@@ -102,7 +102,6 @@
                 }).catch((error) => {
                     toastr.error("Ha ocurrido un error refresque la página", "Error");
                 });
-
             },
             cambiar(accion,turno){
                 axios({

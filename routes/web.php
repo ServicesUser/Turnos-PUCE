@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function (){
     Route::prefix('/turnos/citas')->group(function () {
         Route::get('/', 'HomeController@citas')->name('turnos.citas');
         Route::options('/','CitasController@cola');
+        Route::post('/','CitasController@cambiarEstado');
     });
 
 
