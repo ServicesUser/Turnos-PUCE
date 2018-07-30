@@ -1,4 +1,5 @@
 <div class="m-stack__item m-stack__item--center">
+    <!--
     <div class="m-login__account">
         <br>
         <span class="m-login__account-msg">
@@ -8,4 +9,5 @@
             Regístrese
         </a>
     </div>
+    -->
 </div>
