@@ -26,4 +26,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $with             =   ['cubiculo'];
+
+    public function cubiculo(){
+        return $this->belongsTo(Cubiculo::class,'id_cu','id_cu');
+    }
 }

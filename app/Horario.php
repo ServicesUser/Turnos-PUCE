@@ -11,11 +11,15 @@ class Horario extends Model
     public const UPDATED_AT     =   'creado_ho';
     public const CREATED_AT     =   'creado_ho';
 
-    protected $with             =   ['dia'];
+    protected $with             =   ['dia','responsable'];
 
 
 
     public function dia(){
         return $this->belongsTo(Dia::class,'id_di','id_di');
+    }
+
+    public function responsable(){
+        return $this->belongsTo(User::class,'id','id');
     }
 }

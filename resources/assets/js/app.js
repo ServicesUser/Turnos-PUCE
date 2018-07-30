@@ -26,6 +26,9 @@ Vue.component('nuevo-horario', require('./components/operador/nuevo-horario'));
 Vue.component('horarios', require('./components/operador/horarios'));
 Vue.component('citas', require('./components/operador/citas'));
 
+Vue.component('estudiante', require('./components/estudiante'));
+
+
 export let Bus = new Vue();
 
 const app = new Vue({
