@@ -10,21 +10,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="list-group">
-                                    <a href="javascript:;" class="list-group-item active">
-                                        <h4 class="list-group-item-heading">List group item heading</h4>
-                                        <p class="list-group-item-text"> Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. </p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="list-group">
-                                    <a href="javascript:;" class="list-group-item active">
-                                        <h4 class="list-group-item-heading">List group item heading</h4>
-                                        <p class="list-group-item-text"> Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. </p>
-                                    </a>
-                                </div>
+                            <div class="list-group">
+                                <a href="javascript:;" class="list-group-item" v-for="item in lista.toca">
+                                    <h4 class="list-group-item-heading">{{item.inicio_tu}} {{item.detalle_cu}}</h4>
+                                    <p class="list-group-item-text">{{item.nombres_es}} {{item.apellidos_es}}</p>
+                                </a>
                             </div>
                         </div>
                     </div>
