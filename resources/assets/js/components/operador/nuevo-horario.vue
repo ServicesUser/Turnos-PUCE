@@ -69,7 +69,7 @@
                         if(inicio[0]>=moment().format('HH') && fin[0]>inicio[0]){
                             axios({
                                 method: 'POST',
-                                url:locations.origin+location.pathname,
+                                url:location.origin+location.pathname,
                                 params: {
                                     'fecha':this.fecha,
                                     'inicio':this.inicio,
