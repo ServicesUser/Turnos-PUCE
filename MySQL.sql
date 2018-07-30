@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     29/07/2018 22:47:44                          */
+/* Created on:     30/07/2018 6:58:04                           */
 /*==============================================================*/
 
 
@@ -138,6 +138,7 @@ create table turnos
    inicio_tu            time not null,
    fin_tu               time not null,
    fecha_tu             date not null,
+   nu_tu                int,
    primary key (id_tu)
 );
 
@@ -156,7 +157,7 @@ create table users
    email                varchar(100),
    status               bool default false,
    enabled              bool default false,
-   queued               bool,
+   queued               bool default false,
    primary key (id)
 );
 

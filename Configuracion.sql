@@ -11,7 +11,9 @@ INSERT INTO `cubiculos` (`id_cu`, `detalle_cu`, `codigo_cu`) VALUES
 (10,"Módulo 10",null),
 (11,"Módulo 11",null),
 (12,"Módulo 12",null),
-(13,"Módulo 13",null);
+(13,"Módulo 13",null),
+(14,"Módulo 14",null),
+(15,"Módulo 15",null);
 
 INSERT INTO `estado_turno` (`id_et`, `nombre_et`) VALUES
 (1, 'Disponible'),
@@ -19,6 +21,23 @@ INSERT INTO `estado_turno` (`id_et`, `nombre_et`) VALUES
 (3, 'Atendido'),
 (4, 'Transferido'),
 (5, 'No llegó');
+
+INSERT INTO `users` (`id`, `id_cu`, `name`, `password`, `remember_token`, `created_at`, `updated_at`, `email`, `status`, `enabled`, `queued`) VALUES
+(1,1, 'Operador 1', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador1@dgepuce.edu.ec', 0, 0, 0),
+(2,2, 'Operador 2', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador2@dgepuce.edu.ec', 0, 0, 0),
+(3,3, 'Operador 3', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador3@dgepuce.edu.ec', 0, 0, 0),
+(4,4, 'Operador 4', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador4@dgepuce.edu.ec', 0, 0, 0),
+(5,5, 'Operador 5', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador5@dgepuce.edu.ec', 0, 0, 0),
+(6,6, 'Operador 6', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador6@dgepuce.edu.ec', 0, 0, 0),
+(7,7, 'Operador 7', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador7@dgepuce.edu.ec', 0, 0, 0),
+(8,8, 'Operador 8', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador8@dgepuce.edu.ec', 0, 0, 0),
+(9,9, 'Operador 9', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador9@dgepuce.edu.ec', 0, 0, 0),
+(10,10, 'Operador 10', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador10@dgepuce.edu.ec', 0, 0, 0),
+(11,11, 'Operador 11', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador11@dgepuce.edu.ec', 0, 0, 0),
+(12,12, 'Operador 12', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador12@dgepuce.edu.ec', 0, 0, 0),
+(13,13, 'Operador 13', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador13@dgepuce.edu.ec', 0, 0, 0),
+(14,14, 'Operador 14', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador14@dgepuce.edu.ec', 0, 0, 0),
+(15,15, 'Operador 15', '$2y$10$zHBJtIcMnEWxMU69oqcnhO34S/9CkZ2i9.AImsrDyFpU5CBzccN1W', NULL, '2018-07-30 05:25:44', '2018-07-30 10:25:44', 'operador15@dgepuce.edu.ec', 0, 0, 0);
 
 INSERT INTO `estudiantes` (`cedula_es`, `nombres_es`, `apellidos_es`, `celular_es`, `email_es`, `telefono_es`, `validado_es`) VALUES
 ('0104015177', 'EDGAR XAVIER', 'PALACIOS CHACHA', '91466002', 'madevidxp@hotmail.com', '74093961', 0),
