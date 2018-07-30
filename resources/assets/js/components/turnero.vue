@@ -7,7 +7,7 @@
         name: "turnero",
         mounted(){
             Echo.private('Turnos')
-                .notification('ActualizarTurnero',(e) => {
+                .notification((e) => {
                     console.log(e);
                 });
         }

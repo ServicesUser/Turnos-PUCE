@@ -1,1 +1,1 @@
-<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//turnos.dgepuce.edu.ec/chat/php/app.php?widget-init.js');</script>
+<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//www.relatios.com/chat/php/app.php?widget-init.js');</script>
