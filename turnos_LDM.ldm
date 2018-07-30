@@ -2385,33 +2385,33 @@ LABL 0 Arial,8,N</a:FontList>
 </o:EntityAttribute>
 <o:EntityAttribute Id="o88">
 <a:ObjectID>33A43EC6-612C-4CAB-9D9B-2A3E141E21F3</a:ObjectID>
-<a:Name>inicio_at</a:Name>
-<a:Code>INICIO_AT</a:Code>
+<a:Name>inicio_tu</a:Name>
+<a:Code>INICIO_TU</a:Code>
 <a:CreationDate>1532920430</a:CreationDate>
 <a:Creator>SebastiaN</a:Creator>
-<a:ModificationDate>1532920466</a:ModificationDate>
+<a:ModificationDate>1532922445</a:ModificationDate>
 <a:Modifier>SebastiaN</a:Modifier>
 <a:DataType>T</a:DataType>
 <a:LogicalAttribute.Mandatory>1</a:LogicalAttribute.Mandatory>
 </o:EntityAttribute>
 <o:EntityAttribute Id="o89">
 <a:ObjectID>B9BF88F1-BA35-4FB6-9692-F27ABC6F0D2B</a:ObjectID>
-<a:Name>fin_at</a:Name>
-<a:Code>FIN_AT</a:Code>
+<a:Name>fin_tu</a:Name>
+<a:Code>FIN_TU</a:Code>
 <a:CreationDate>1532920430</a:CreationDate>
 <a:Creator>SebastiaN</a:Creator>
-<a:ModificationDate>1532920466</a:ModificationDate>
+<a:ModificationDate>1532922445</a:ModificationDate>
 <a:Modifier>SebastiaN</a:Modifier>
 <a:DataType>T</a:DataType>
 <a:LogicalAttribute.Mandatory>1</a:LogicalAttribute.Mandatory>
 </o:EntityAttribute>
 <o:EntityAttribute Id="o90">
 <a:ObjectID>B5FCA339-E1D3-48C9-8898-F3193A5799A5</a:ObjectID>
-<a:Name>fecha_at</a:Name>
-<a:Code>FECHA_AT</a:Code>
+<a:Name>fecha_tu</a:Name>
+<a:Code>FECHA_TU</a:Code>
 <a:CreationDate>1532920882</a:CreationDate>
 <a:Creator>SebastiaN</a:Creator>
-<a:ModificationDate>1532920905</a:ModificationDate>
+<a:ModificationDate>1532922445</a:ModificationDate>
 <a:Modifier>SebastiaN</a:Modifier>
 <a:DataType>D</a:DataType>
 <a:LogicalAttribute.Mandatory>1</a:LogicalAttribute.Mandatory>

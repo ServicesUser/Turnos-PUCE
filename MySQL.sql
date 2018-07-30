@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     29/07/2018 22:34:16                          */
+/* Created on:     29/07/2018 22:47:44                          */
 /*==============================================================*/
 
 
@@ -135,9 +135,9 @@ create table turnos
    creado_tu            timestamp default current_timestamp,
    actualizado_tu       timestamp default current_timestamp on update current_timestamp,
    qa_tu                int,
-   inicio_at            time not null,
-   fin_at               time not null,
-   fecha_at             date not null,
+   inicio_tu            time not null,
+   fin_tu               time not null,
+   fecha_tu             date not null,
    primary key (id_tu)
 );
 
