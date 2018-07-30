@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Estudiante;
+use App\Notifications\ConfirmacionTurno;
 use App\Turno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -80,6 +82,7 @@ class EstudianteController extends Controller
             $estudiante             =   Estudiante::find($a->cedula_es);
 
             $tiene                  =   Turno::with('horario')->with('antendio')->where('cedula_es', $estudiante->cedula_es)->first();
+            Notification::route('mail', $estudiante->email_es)->notify( new ConfirmacionTurno(['turno'=>$tiene]));
             return $tiene;
         }
     }

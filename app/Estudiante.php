@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Estudiante extends Model
 {
+    use Notifiable;
+
     protected $primaryKey       =   "cedula_es";
     public $incrementing        =   false;
     public $timestamps          =   false;
