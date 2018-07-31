@@ -25,7 +25,7 @@
                                 <span class="icon-bar"></span>
                             </span>
                         </button>
-                        <a class="page-logo" :href="ruta+'/home'">
+                        <a class="page-logo" href="/">
                             <img src="{{asset('/images/logo_puce_blanco.png')}}" alt="Logo PUCE">
                         </a>
                     </div>
