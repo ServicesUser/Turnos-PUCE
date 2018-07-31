@@ -16,9 +16,28 @@ class EstudianteController extends Controller
     public function consultar(Request $datos){
         $fecha  =   Date::now()->format('Y-m-d');
         $estudainte =   Estudiante::find($datos->dni);
-        $turno      =   Turno::where('fecha_tu',$fecha)->where('cedula_es',$estudainte->cedula_es)->first();
+        $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',1)->first();
         $estudainte =   collect($estudainte)->put('turno', $turno);
         return $estudainte;
+    }
+
+    public function eliminarTurno(Request $datos){
+        $validacion = Validator::make($datos->all(), [
+            'turno.id_tu'  =>  'exists:turnos,id_tu'
+        ]);
+        if ($validacion->fails()) {
+            $mensaje="";
+            foreach ($validacion->errors()->all() as $item)
+                $mensaje.="$item</br>";
+            return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
+        }else{
+            $a                      =   json_decode ($datos->turno);
+            $aux                    =   Turno::find($a->id_tu);
+            $aux->id_et             =   1;
+            $aux->cedula_es         =   null;
+            $aux->save();
+            return (['val'=>true,'mensaje'=>"Se ha eliminado tu reserva ".$aux->fecha_tu." a las ".$aux->inicio_tu]);
+        }
     }
 
     public function actualizar(Request $datos){
@@ -59,7 +78,7 @@ class EstudianteController extends Controller
             $a                      =   json_decode ($datos->turno);
             $turno                  =   Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'),$a->fecha)->where('inicio_tu',$a->inicio)->where('fin_tu',$a->fin)->where('id_et',1)->first();
 
-            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->first();
+            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',1)->first();
             if($tiene)
                 return (['val'=>false,'mensaje'=>"Ya tiene un turno asignado, refresque la página"]);
             if($turno){

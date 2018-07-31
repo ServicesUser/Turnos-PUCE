@@ -74,8 +74,11 @@
                             <div class="mt-head-desc"><b>Su turno es a las {{turno.inicio_tu}}</b> <br>Recuerde estar 10 minutos antes</div>
                             <span class="mt-head-date">{{fechaCompleta}}</span>
                             <div class="mt-head-button" >
-                                <!--<button type="button" class="btn btn-circle btn-outline white btn-sm">Add</button>-->
                                 <h3>{{turno.horario.responsable.cubiculo.detalle_cu ? turno.horario.responsable.cubiculo.detalle_cu :turno.atendido.cubiculo.detalle_cu}}</h3>
+                                <br>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-circle red" v-on:click="eliminar">Eliminar Reserva</button>
                             </div>
                         </div>
                     </div>
@@ -167,6 +170,22 @@
                     toastr.error("Ingrese una identificación válida", "Error");
                     this.mensaje.tipo='alert-danger';
                 }
+            },
+            eliminar:function(){
+                axios({
+                    method: 'PUT',
+                    url:location.origin+'/api/estudiantes',
+                    params:{
+                        'turno':this.turno,
+                    }
+                }).then((response) => {
+                    if(response.data.val){
+                        toastr.info(response.data.mensaje, "Éxito");
+                        this.consultar();
+                    }else{
+                        toastr.error(response.data.mensaje, "Error");
+                    }
+                });
             },
             actualizar:function() {
                 if (this.correo !== '') {
