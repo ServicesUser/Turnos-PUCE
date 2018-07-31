@@ -19,4 +19,11 @@ class TurneroController extends Controller
         $paso   =   DB::select("SELECT turnos.id_tu,nu_tu,turnos.id_et,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es,detalle_cu,fecha_tu,nombre_et FROM turnos natural join horarios natural join users natural join estudiantes natural join  cubiculos natural join estado_turno where DATE_FORMAT(CONCAT(fecha_tu,' ',fin_tu), '%Y-%m-%d %H:%i:%s')>=DATE_FORMAT('$fecha2','%Y-%m-%d %H:%i:%s') and id_et>2 and fecha_tu=DATE('$fecha') order by inicio_tu limit 12");
         return (['toca'=>$toca,'paso'=>$paso]);
     }
+
+    public function disponibles(){
+        $toca   =   DB::select("SELECT turnos.id_tu,nu_tu,turnos.id_et,inicio_tu,fin_tu,detalle_cu,fecha_tu,nombre_et FROM turnos natural join horarios natural join users natural join  cubiculos natural join estado_turno where turnos.id_et=1 order by fecha_tu,inicio_tu ");
+
+        return view('disponibles',['disponibles'=>$toca]);
+
+    }
 }

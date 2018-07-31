@@ -39,4 +39,5 @@ Route::middleware(['auth'])->group(function (){
 });
 
 Route::get('cola','TurneroController@vista');
+Route::get('disponibles','TurneroController@disponibles');
 
