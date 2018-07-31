@@ -13,8 +13,7 @@ class Estudiante extends Model
     public $incrementing        =   false;
     public $timestamps          =   false;
 
-
-    protected $with             =   ['turno'];
+    //protected $with =   ['turno'];
 
     public function routeNotificationForMail($notification)
     {

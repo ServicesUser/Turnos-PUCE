@@ -18,6 +18,7 @@
         data: () => ({
             lista:[]
         }),
+
         props:['estudiante'],
         methods:{
             cargar:function(){

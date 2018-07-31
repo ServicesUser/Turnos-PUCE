@@ -28,7 +28,6 @@ Vue.component('citas', require('./components/operador/citas'));
 
 Vue.component('estudiante', require('./components/estudiante'));
 
-
 export let Bus = new Vue();
 
 const app = new Vue({

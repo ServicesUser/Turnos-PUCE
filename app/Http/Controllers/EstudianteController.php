@@ -9,11 +9,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Jenssegers\Date\Date;
 
 class EstudianteController extends Controller
 {
     public function consultar(Request $datos){
-        return Estudiante::find($datos->dni);
+        $fecha  =   Date::now()->format('Y-m-d');
+        $estudainte =   Estudiante::find($datos->dni);
+        $turno      =   Turno::where('fecha_tu',$fecha)->where('cedula_es',$estudainte->cedula_es)->first();
+        $estudainte =   collect($estudainte)->put('turno', $turno);
+        return $estudainte;
     }
 
     public function actualizar(Request $datos){
