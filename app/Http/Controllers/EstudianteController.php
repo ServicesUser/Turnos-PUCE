@@ -16,7 +16,7 @@ class EstudianteController extends Controller
     public function consultar(Request $datos){
         $fecha  =   Date::now()->format('Y-m-d');
         $estudainte =   Estudiante::find($datos->dni);
-        $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',1)->first();
+        $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',2)->first();
         $estudainte =   collect($estudainte)->put('turno', $turno);
         return $estudainte;
     }
@@ -78,7 +78,7 @@ class EstudianteController extends Controller
             $a                      =   json_decode ($datos->turno);
             $turno                  =   Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'),$a->fecha)->where('inicio_tu',$a->inicio)->where('fin_tu',$a->fin)->where('id_et',1)->first();
 
-            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',1)->first();
+            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',2)->first();
             if($tiene)
                 return (['val'=>false,'mensaje'=>"Ya tiene un turno asignado, refresque la página"]);
             if($turno){
