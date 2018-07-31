@@ -73,7 +73,7 @@ class HorariosController extends Controller{
                         $fInicio->add("$duracion minute");
                         $turno->fin_tu      =   $fInicio->format('H:i:s');
                         $turno->fecha_tu    =   $dias->fecha_di;
-                        if($fInicio<$fFin){
+                        if($fInicio<=$fFin){
                             $turno->save();
                             $generado++;
                         }
@@ -93,7 +93,7 @@ class HorariosController extends Controller{
     public function disponibles(Request $datos){
         $disponibles    =   Turno::select(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y") AS  fecha'),DB::raw('DATE_FORMAT(inicio_tu, "%H:%i") AS inicio'),DB::raw('DATE_FORMAT(fin_tu, "%H:%i") AS  fin'),DB::raw('DATE_FORMAT(CONCAT(fecha_tu," ",inicio_tu), "%Y/%m/%d") AS date'),DB::raw('COUNT(id_tu) as cupos'))
                                     ->where('id_et',1)
-                                    ->where(DB::raw('DATE(DATE_FORMAT(CONCAT(fecha_tu," ",inicio_tu), "%Y/%m/%d"))'),'>=',$datos->fecha)
+                                    ->where(DB::raw('DATE(DATE_FORMAT(CONCAT(fecha_tu," ",inicio_tu), "%Y/%m/%d"))'),'>=',DB::raw('DATE("'.$datos->fecha.'")'))
                                     ->orderBy('fecha_tu','inicio_tu')
                                     ->groupBy('inicio_tu','fin_tu','fecha_tu')
                                     ->get();
