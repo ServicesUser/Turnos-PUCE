@@ -143,7 +143,7 @@
                         if(response.data){
                             this.estudiante=response.data;
                             if(response.data.turno===null){
-                                this.correo=response.data.email.es;
+                                this.correo=response.data.email_es;
                                 if(response.data.validado_es){
                                    this.pasos=3;
                                     this.mensaje.tipo='alert-info';
