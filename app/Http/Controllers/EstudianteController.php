@@ -18,12 +18,11 @@ class EstudianteController extends Controller
         $estudainte =   Estudiante::find($datos->dni);
         if(!$estudainte){
             return (null);
-            exit();
+        }else{
+            $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',2)->first();
+            $estudainte =   collect($estudainte)->put('turno', $turno);
+            return $estudainte;
         }
-
-        $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',2)->first();
-        $estudainte =   collect($estudainte)->put('turno', $turno);
-        return $estudainte;
     }
 
     public function eliminarTurno(Request $datos){
