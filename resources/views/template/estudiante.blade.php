@@ -1,4 +1,7 @@
 <!doctype html>
+<!--[if IE 8]> <html lang="{{ config('app.locale')}}" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="{{ config('app.locale') }}" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <title>{{config('app.name')}} | @yield('titulo')</title>
