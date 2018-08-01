@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ActualizarTurnero;
+use App\Events\Turno as Notificacion;
+use App\Historia;
 use App\Horario;
 use App\Turno;
 use Illuminate\Http\Request;
@@ -30,10 +31,14 @@ class CitasController extends Controller
             $turno->id_et   =   $datos->estado;
             $turno->id_us   =   Auth::user()->id;
             $turno->save();
-            event(new \App\Events\Turno($turno));
+            event(new Notificacion($turno));
             return (['val' => true,'mensaje'=>'Se a guardado correctamente']);
         }
         return (['val' => false,'mensaje'=>'Ha ocurrido un error vuelva a cargar la página']);
+    }
+
+    public function historial(){
+        return Historia::where('id',Auth::user()->id)->limit(50)->latest('fecha_ht')->get();
     }
 
 }
