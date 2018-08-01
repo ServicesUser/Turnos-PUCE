@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                                 <div class="col2">
-                                    <div class="date">{{item.fecha_et}}</div>
+                                    <div class="date">{{item.fecha_ht}}</div>
                                 </div>
                             </li>
                         </ul>
