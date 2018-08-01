@@ -38,19 +38,18 @@
 </template>
 
 <script>
-    require('tone');
     import fullscreen from 'vue-fullscreen';
     Vue.use(fullscreen)
     export default {
         name: "turnero",
         data: () => ({
             lista:[],
-            sonido:0,//new Tone.PolySynth(4, Tone.Synth).toMaster(),
+            sonido:new Audio('https://raw.githubusercontent.com/IonDen/ion.sound/master/sounds/bell_ring.mp3'),
             fullscreen: false,
         }),
         watch:{
             'lista':function(){
-                //this.sonido.triggerAttack(['C4', 'E4', 'G4', 'B4'])
+                this.sonido.play();
             }
         },
         computed:{
@@ -60,8 +59,7 @@
         },
         methods:{
             toggle:function() {
-                this.$refs['fullscreen'].toggle() // recommended
-                // this.fullscreen = !this.fullscreen // deprecated
+                this.$refs['fullscreen'].toggle();
             },
             fullscreenChange:function(fullscreen) {
                 this.fullscreen = fullscreen
