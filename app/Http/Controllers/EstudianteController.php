@@ -16,8 +16,11 @@ class EstudianteController extends Controller
     public function consultar(Request $datos){
         $fecha      =   Date::now()->format('Y-m-d');
         $estudainte =   Estudiante::find($datos->dni);
-        if(!$estudainte)
+        if(!$estudainte){
             return (null);
+            exit();
+        }
+
         $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',2)->first();
         $estudainte =   collect($estudainte)->put('turno', $turno);
         return $estudainte;
