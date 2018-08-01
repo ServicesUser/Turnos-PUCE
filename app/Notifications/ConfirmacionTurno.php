@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Jenssegers\Date\Date;
 
 class ConfirmacionTurno extends Notification
 {
@@ -44,9 +45,11 @@ class ConfirmacionTurno extends Notification
         return (new MailMessage)
                     ->greeting('Hola '.$notifiable->nombres_es)
                     ->line('Se ha registrado su reservación Exitosamente.')
-                    ->line('Fecha: '.$this->datos->fecha_tu)
+                    ->line('Fecha: '.Date::createFromFormat('Y-m-d', $this->datos->fecha_tu)->format('l, d F Y'))
                     ->line('Hora: '.$this->datos->inicio_tu)
-                    ->line($this->datos->horario['responsable']['cubiculo']['detalle_cu']);
+                    ->line($this->datos->horario['responsable']['cubiculo']['detalle_cu'])
+                    ->action('Para eliminar reserva',route('turno'))
+                    ->salutation('Buen día ');
     }
 
     /**
