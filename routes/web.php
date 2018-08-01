@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function (){
 
     Route::prefix('app')->group(function () {
         Route::get('basic','HomeController@main');
+        Route::get('history','CitasController@historial');
     });
 });
 
