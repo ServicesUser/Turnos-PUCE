@@ -16,7 +16,8 @@
     export default {
         name: "est-cal",
         data: () => ({
-            lista:[]
+            lista:[],
+            fecha:moment().format('YYYY/MM/DD'),
         }),
 
         props:['estudiante'],
@@ -57,6 +58,7 @@
         },
         mounted(){
             this.cargar();
+            this.$EventCalendar.toDate(this.fecha);
         }
     }
 </script>
