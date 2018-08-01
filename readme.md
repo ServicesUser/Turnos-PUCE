@@ -7,4 +7,4 @@ Sistema para generar turnos de la PUCE Quito, específicamente para estudiantes 
 
 ## License
 
-TUrnos PUCE esta bajo la licencia  [MIT license](https://opensource.org/licenses/MIT).
+Turnos PUCE esta bajo la licencia  [MIT license](https://opensource.org/licenses/MIT).
