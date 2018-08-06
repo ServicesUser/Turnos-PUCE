@@ -1,0 +1,32 @@
+// Bootstrap
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+//font awesome
+@import "~font-awesome/css/font-awesome.css";
+
+//animate css
+@import "~animate.css/animate.css";
+
+//simple-line-icons
+@import "~simple-line-icons/scss/simple-line-icons.scss";
+
+//bootstrap-select
+@import "~bootstrap-select/sass/bootstrap-select.scss";
+
+//bootstrap-switch
+@import "~bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css";
+
+//daterangepicker
+@import "~daterangepicker/daterangepicker.scss";
+
+@import "~bootstrap-timepicker/css/bootstrap-timepicker.min.css";
+
+//toast
+@import "~toastr/toastr";
+
+@import "../tema/global/css/components.css";
+@import "../tema/global/css/plugins.css";
+
+@import "variables.scss";
+@import "../tema/layouts/layout2/sass/estudiante";
+
