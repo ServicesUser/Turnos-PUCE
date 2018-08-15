@@ -17,7 +17,7 @@ class EstudianteController extends Controller
         $fecha      =   Date::now()->format('Y-m-d');
         $estudainte =   Estudiante::find($datos->dni);
         if(!$estudainte){
-            return (null);
+            return app('App\Http\Controllers\ConsultaApiController')->guardar($datos->dni);
         }else{
             $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',2)->first();
             $estudainte =   collect($estudainte)->put('turno', $turno);
@@ -110,7 +110,8 @@ class EstudianteController extends Controller
             $estudiante             =   Estudiante::find($a->cedula_es);
 
             $tiene                  =   Turno::with('horario')->with('antendio')->where('cedula_es', $estudiante->cedula_es)->first();
-            Notification::send($estudiante, new ConfirmacionTurno($tiene));
+            if($tiene)
+                Notification::send($estudiante, new ConfirmacionTurno($tiene));
             return $tiene;
         }
     }
