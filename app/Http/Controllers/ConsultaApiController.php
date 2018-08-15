@@ -24,6 +24,7 @@ class ConsultaApiController extends Controller
 
     public function guardar($cedula){
         $valor  =   $this->intranet($cedula);
+        $nuevo  =   null;
         if($valor){
             $nuevo              =   new Estudiante();
             $nuevo->cedula_es   =   $valor->first()->cedula;
@@ -31,8 +32,8 @@ class ConsultaApiController extends Controller
             $nuevo->celular_es  =   $valor->first()->celular;
             $nuevo->telefono_es =   $valor->first()->telefono;
             $nuevo->save();
-            return $nuevo;
-        }else
-            return null;
+            $nuevo              =   collect($nuevo)->put('turno', null);
+        }
+        return $nuevo;
     }
 }
