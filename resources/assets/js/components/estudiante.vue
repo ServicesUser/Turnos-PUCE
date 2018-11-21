@@ -156,7 +156,7 @@
                             }else{
                                 this.pasos=4;
                                 this.mensaje.tipo='alert-info';
-                                this.mensaje.texto='La inforamción de su turno';
+                                this.mensaje.texto='La información de su turno';
                             }
                         }else{
                             toastr.error("No se encontró cita previa, contacte a soporte", "Error");
