@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('dispensador', require('./components/turnero'));
+Vue.component('dispensador2', require('./components/turnero2'));
 
 const turnero = new Vue({
     el: '#turnero'
