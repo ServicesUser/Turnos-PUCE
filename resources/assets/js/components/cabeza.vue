@@ -13,6 +13,11 @@
         </a>
         <div class="topbar-actions">
             <notificaciones :usuario="datos.user" :l="datos.notificaciones"></notificaciones>
+            <div class="btn-group-notification btn-group">
+                <button type="button" class="btn btn-sm md-skip" v-on:click="turnero2">
+                    <i class="fa fa-list-ul"></i>
+                </button>
+            </div>
             <div class="btn-group-red btn-group">
                 <button type="button" class="btn btn-sm md-skip" v-on:click="turnero">
                     <i class="fa fa-list-ul"></i>
@@ -72,6 +77,9 @@
             },
             turnero:function(){
                 window.open(location.origin+'/cola', "", "width=600,height=600");
+            },
+            turnero2:function(){
+                window.open(location.origin+'/cola2', "", "width=600,height=600");
             }
         },
         created(){
