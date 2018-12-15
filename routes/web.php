@@ -39,5 +39,7 @@ Route::middleware(['auth'])->group(function (){
 });
 
 Route::get('cola','TurneroController@vista');
+Route::get('cola2','TurneroController@vista2');
+Route::post('cola2','TurneroController@tiempoPuesto');
 Route::get('disponibles','TurneroController@disponibles');
 
