@@ -49,7 +49,7 @@
                                 if(e.url!==null)
                                     window.location.href=e.url;
                             }});
-                        console.log('Mensaje');;
+                        console.log('Mensaje');
                     });
             }
         },
