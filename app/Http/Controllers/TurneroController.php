@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cubiculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +16,10 @@ class TurneroController extends Controller
 
     public function vista2(){
         return view('turnero2');
+    }
+
+    public function modulos(){
+        return Cubiculo::all();
     }
 
 
@@ -31,6 +36,7 @@ class TurneroController extends Controller
             'fecha' =>  'required|date',
             'desde' =>  'required|numeric',
             'hasta' =>  'required|numeric|gt:desde',
+            'modulo'=>  'required'
         ]);
         if ($validator->fails()) {
             $linea = '';
@@ -41,8 +47,9 @@ class TurneroController extends Controller
         }else{
             $fecha  =   Date::createFromFormat('Y-m-d H:i:s',$datos->fecha." ".$datos->desde.":00:00");
             $fecha2 =   Date::createFromFormat('Y-m-d H:i:s',$datos->fecha." ".$datos->hasta.":00:00");
-            $toca   =   DB::select("SELECT turnos.id_tu,nu_tu,turnos.id_et,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es,detalle_cu,fecha_tu,nombre_et FROM turnos natural join horarios natural join users natural join estudiantes natural join  cubiculos natural join estado_turno where DATE_FORMAT(CONCAT(fecha_tu,' ',inicio_tu), '%Y-%m-%d %H:%i:%s')>=DATE_FORMAT('$fecha','%Y-%m-%d %H:%i:%s') and id_et=2 and fecha_tu=DATE('$fecha') order by inicio_tu,detalle_cu ASC ");
-            $paso   =   DB::select("SELECT turnos.id_tu,nu_tu,turnos.id_et,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es,detalle_cu,fecha_tu,nombre_et FROM turnos natural join horarios natural join users natural join  cubiculos natural join estado_turno left join estudiantes on estudiantes.cedula_es=turnos.cedula_es where DATE_FORMAT(CONCAT(fecha_tu,' ',fin_tu), '%Y-%m-%d %H:%i:%s')<=DATE_FORMAT('$fecha2','%Y-%m-%d %H:%i:%s') and id_et!=2 and fecha_tu=DATE('$fecha') order by inicio_tu,detalle_cu ASC");
+            $cubiculo=$datos->modulo;
+            $toca   =   DB::select("SELECT turnos.id_tu,nu_tu,turnos.id_et,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es,detalle_cu,fecha_tu,nombre_et FROM turnos natural join horarios natural join users natural join estudiantes natural join  cubiculos natural join estado_turno where DATE_FORMAT(CONCAT(fecha_tu,' ',inicio_tu), '%Y-%m-%d %H:%i:%s')>=DATE_FORMAT('$fecha','%Y-%m-%d %H:%i:%s') and id_et=2 and fecha_tu=DATE('$fecha') and cubiculos.id_cu=$cubiculo order by inicio_tu,detalle_cu ASC ");
+            $paso   =   DB::select("SELECT turnos.id_tu,nu_tu,turnos.id_et,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es,detalle_cu,fecha_tu,nombre_et FROM turnos natural join horarios natural join users natural join  cubiculos natural join estado_turno left join estudiantes on estudiantes.cedula_es=turnos.cedula_es where DATE_FORMAT(CONCAT(fecha_tu,' ',fin_tu), '%Y-%m-%d %H:%i:%s')<=DATE_FORMAT('$fecha2','%Y-%m-%d %H:%i:%s') and id_et!=2 and fecha_tu=DATE('$fecha') and cubiculos.id_cu=$cubiculo order by inicio_tu,detalle_cu ASC");
             return (['val'=>true,'toca'=>$toca,'paso'=>$paso,'desde'=>$fecha,'hasta'=>$fecha2]);
         }
     }
