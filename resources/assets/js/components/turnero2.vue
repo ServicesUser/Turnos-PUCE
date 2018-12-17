@@ -33,6 +33,7 @@
                                 <button type="submit" class="btn btn-default">Consultar</button>
                             </form>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="list-group">
