@@ -13,6 +13,12 @@
                         <div class="row">
                             <form class="form-inline" role="form" v-on:submit.prevent="enviar">
                                 <div class="form-group">
+                                    <label class="sr-only">Módulo</label>
+                                    <select class="form-control" v-model="modulo">
+                                        <option v-for="item in modulos" :value="item.id_cu">{{item.detalle_cu}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label class="sr-only">Fecha</label>
                                     <input type="date" class="form-control" placeholder="yyyy-mm-dd" v-model="fecha">
                                 </div>
@@ -65,6 +71,8 @@
             fecha:null,
             desde:null,
             hasta:null,
+            modulo:null,
+            modulos:[],
         }),
         watch:{
         },
@@ -82,6 +90,7 @@
                         'fecha':this.fecha,
                         'desde':this.desde,
                         'hasta':this.hasta,
+                        'modulo':this.modulo,
                     },
                 }).then((response) => {
                     if(response.data.val)
@@ -99,6 +108,12 @@
             fullscreenChange:function(fullscreen) {
                 this.fullscreen = fullscreen
             },
+            cargarCu:function(){
+                axios.options(window.location.origin+location.pathname)
+                    .then((response) => {
+                        this.modulos=response.data;
+                    });
+            },
             cargar:function(){
                 axios.get(window.location.origin+'/api/realtime')
                     .then((response) => {
@@ -107,6 +122,7 @@
             }
         },
         mounted(){
+            this.cargarCu();
         }
     }
 </script>
