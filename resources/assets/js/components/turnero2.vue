@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="list-group">
-                                    <a href="javascript:;" class="list-group-item danger" v-for="item in lista.paso" :class="item.id_et===3 ? 'list-group-item-success' : 'list-group-item-danger'">
+                                    <a href="javascript:;" class="list-group-item danger" v-for="item in lista.paso" :class="item.id_et===3 ? 'list-group-item-success' : item.id_et===1 ? 'list-group-item-warning' : 'list-group-item-danger'">
                                         <h4 class="list-group-item-heading"><b>{{item.inicio_tu}} {{item.detalle_cu}}</b></h4>
                                         <p class="list-group-item-text">{{item.nombres_es}} {{item.apellidos_es}} <span class="label" :class="item.id_et===3 ? 'label-success' : 'label-danger'">{{item.nombre_et}}</span></p>
                                     </a>
