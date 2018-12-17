@@ -16,6 +16,7 @@
                                     <label class="sr-only">Módulo</label>
                                     <select class="form-control" v-model="modulo">
                                         <option v-for="item in modulos" :value="item.id_cu">{{item.detalle_cu}}</option>
+                                        <option :value="0">Todos</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
