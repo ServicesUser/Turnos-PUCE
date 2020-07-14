@@ -107,8 +107,8 @@ create table notifications
    notifiable_type      varchar(300),
    data                 text,
    read_at              datetime,
-   updated_at           timestamp,
-   created_at           timestamp,
+   updated_at           timestamp default current_timestamp on update current_timestamp,
+   created_at           timestamp default current_timestamp,
    primary key (id)
 );
 
