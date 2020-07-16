@@ -94,7 +94,7 @@ class EstudianteController extends Controller
             $a                      =   json_decode ($datos->turno);
             $turno                  =   Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'),$a->fecha)->where('inicio_tu',$a->inicio)->where('fin_tu',$a->fin)->where('id_et',1)->first();
 
-            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',2)->where('fecha_tu','>=',$dia)->where('inicio_tu','>',$hora)->first();
+            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',2)->whereDate('fecha_tu','>=',$dia)->whereDate('inicio_tu','>',$hora)->first();
             if($tiene)
                 return (['val'=>false,'mensaje'=>"Ya tiene un turno asignado, refresque la página"]);
             if($turno){
