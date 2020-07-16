@@ -85,7 +85,7 @@ class EstudianteController extends Controller
                 $mensaje.="$item</br>";
             return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
         }else{
-            $dia    =  Carbon::now()->format('d-m-Y');
+            $dia    =  Carbon::now()->format('Y-m-d');
             $hora   =  Carbon::now()->format('H:i:s');
 
             $a                      =   json_decode ($datos->estudiante);
