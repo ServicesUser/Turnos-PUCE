@@ -29,7 +29,7 @@
                 </button>
                 <ul class="dropdown-menu-v2" role="menu">
                     <li>
-                        <a href="#">
+                        <a href="/configuracion">
                             <i class="icon-user"></i> Configuración
                         </a>
                     </li>
@@ -59,10 +59,8 @@
         },
         methods:{
             salir:function(){
-                axios.post(location.origin+'/logout')
-                    .then((response) => {
-                        location.href=location.origin+'/login';
-                    });
+                axios.post(location.origin+'/logout');
+                location.href=location.origin+'/login';
             },
             cargar:function(){
                 axios.get(window.location.origin+'/app/basic')
