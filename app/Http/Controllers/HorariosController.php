@@ -13,6 +13,13 @@ use Jenssegers\Date\Date;
 
 class HorariosController extends Controller{
 
+    protected $registro;
+
+    public function __construct(HistorialController $registro)
+    {
+        $this->registro     =   $registro;
+    }
+
     public function misHorarios(){
         $lista  =   Horario::where('id',Auth::user()->id)->latest('creado_ho')->limit(20)->get();
         $aux    =   [];
@@ -75,6 +82,7 @@ class HorariosController extends Controller{
                         $turno->fecha_tu    =   $dias->fecha_di;
                         if($fInicio<=$fFin){
                             $turno->save();
+                            $this->registro->log($turno);
                             $generado++;
                         }
                     }

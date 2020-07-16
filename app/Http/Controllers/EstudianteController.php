@@ -13,6 +13,13 @@ use Jenssegers\Date\Date;
 
 class EstudianteController extends Controller
 {
+    protected $registro;
+
+    public function __construct(HistorialController $registro)
+    {
+        $this->registro     =   $registro;
+    }
+
     public function consultar(Request $datos){
         $fecha      =   Date::now()->format('Y-m-d');
         $estudainte =   Estudiante::find($datos->dni);
@@ -37,6 +44,7 @@ class EstudianteController extends Controller
         }else{
             $a                      =   json_decode ($datos->turno);
             $aux                    =   Turno::find($a->id_tu);
+            $this->registro->log($aux,1);
             $aux->id_et             =   1;
             $aux->cedula_es         =   null;
             $aux->save();
@@ -89,6 +97,7 @@ class EstudianteController extends Controller
                 $turno->cedula_es   =   $estudiante->cedula_es;
                 $turno->id_et       =   2;
                 $turno->save();
+                $this->registro->log($turno);
                 return (['val'=>true,'mensaje'=>"Se le ha asignado un turno, se envió un correo electrónico a $estudiante->email_es  con la información"]);
             }else{
                 return (['val'=>false,'mensaje'=>"No existe cupos disponibles para la fecha seleccionada"]);

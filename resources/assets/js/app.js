@@ -25,6 +25,10 @@ Vue.component('est-cal', require('./components/est-cal'));
 Vue.component('nuevo-horario', require('./components/operador/nuevo-horario'));
 Vue.component('horarios', require('./components/operador/horarios'));
 Vue.component('citas', require('./components/operador/citas'));
+Vue.component('feed', require('./components/operador/feed'));
+Vue.component('parametros', require('./components/operador/zoom'));
+Vue.component('contrasena', require('./components/operador/contrasena'));
+
 
 Vue.component('estudiante', require('./components/estudiante'));
 

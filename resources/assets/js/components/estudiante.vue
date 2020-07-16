@@ -76,9 +76,10 @@
                             <div class="mt-head-button" >
                                 <h3>{{turno.horario.responsable.cubiculo.detalle_cu ? turno.horario.responsable.cubiculo.detalle_cu :turno.atendido.cubiculo.detalle_cu}}</h3>
                                 <br>
+                                <a v-if="turno.horario.responsable.cubiculo.link_cu" :href="turno.horario.responsable.cubiculo.link_cu" class="btn btn-primary" target="_blank">ZOOM</a>
                             </div>
                             <div class="text-center">
-                                <button type="button" class="btn btn-circle red" v-on:click="eliminar">Eliminar Reserva</button>
+                                <button type="button" class="btn btn-circle red" v-on:click="eliminar" :disabled="loadDel" >Eliminar Reserva</button>
                             </div>
                         </div>
                     </div>
@@ -105,6 +106,7 @@
             mensaje:{tipo:'alert-info',texto:'Ingrese su numero de identificación'},
             turno:[],
             cargando:false,
+            loadDel:false,
         }),
         watch:{
           pasos:function(val){
@@ -173,6 +175,7 @@
                 }
             },
             eliminar:function(){
+                this.loadDel=true;
                 axios({
                     method: 'PUT',
                     url:location.origin+'/api/estudiantes',
@@ -186,6 +189,7 @@
                     }else{
                         toastr.error(response.data.mensaje, "Error");
                     }
+                    this.loadDel=false;
                 });
             },
             actualizar:function() {

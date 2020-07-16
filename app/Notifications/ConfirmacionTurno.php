@@ -48,7 +48,8 @@ class ConfirmacionTurno extends Notification
                     ->line('Fecha: '.Date::createFromFormat('Y-m-d', $this->datos->fecha_tu)->format('l, d F Y'))
                     ->line('Hora: '.$this->datos->inicio_tu)
                     ->line($this->datos->horario['responsable']['cubiculo']['detalle_cu'])
-                    ->action('Para eliminar reserva',route('turno'))
+                    ->action('Para eliminar reserva',route('turno'),'red')
+                    ->line("ZOOM  ".$this->datos->horario['responsable']['cubiculo']['link_cu'])
                     ->salutation('Buen día ');
     }
 

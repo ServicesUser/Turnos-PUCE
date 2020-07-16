@@ -13,6 +13,13 @@ use Jenssegers\Date\Date;
 
 class CitasController extends Controller
 {
+    protected $registro;
+
+    public function __construct(HistorialController $registro)
+    {
+        $this->registro     =   $registro;
+    }
+
     public function cola(){
         $usuario    =   Auth::user()->id;
         $pendientes =   DB::select("SELECT turnos.id_tu,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es FROM turnos natural join horarios natural join dias natural join users natural join estudiantes where fecha_di=CURDATE() and id_et=2 and users.id=$usuario order by inicio_tu");
@@ -31,6 +38,7 @@ class CitasController extends Controller
             $turno->id_et   =   $datos->estado;
             $turno->id_us   =   Auth::user()->id;
             $turno->save();
+            $this->registro->log($turno,$datos->estado);
             event(new Notificacion($turno));
             return (['val' => true,'mensaje'=>'Se a guardado correctamente']);
         }

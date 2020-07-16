@@ -21,4 +21,8 @@ class Turno extends Model
         return $this->belongsTo(Horario::class,'id_ho','id_ho');
     }
 
+    public function estudiante(){
+        return $this->hasOne(Estudiante::class,'cedula_es','cedula_es');
+    }
+
 }

@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/inicio', 'HomeController@index')->name('home');
+    Route::get('/configuracion', 'ConfiguracionController@index');
 
     Route::prefix('/turnos/horario')->group(function () {
         Route::get('/', 'HomeController@horarios')->name('turnos.horarios');
@@ -35,6 +36,10 @@ Route::middleware(['auth'])->group(function (){
 
     Route::prefix('app')->group(function () {
         Route::get('basic','HomeController@main');
+        Route::post('feed','CitasController@historial');
+        Route::post('/contrasena', 'ConfiguracionController@contrasena');
+        Route::get('/configuracion', 'ConfiguracionController@loadParametros');
+        Route::post('/configuracion', 'ConfiguracionController@parametros');
     });
 });
 
