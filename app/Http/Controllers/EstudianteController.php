@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Estudiante;
 use App\Notifications\ConfirmacionTurno;
 use App\Turno;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\DB;
@@ -84,13 +85,16 @@ class EstudianteController extends Controller
                 $mensaje.="$item</br>";
             return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
         }else{
+            $dia    =  Carbon::now()->format('d-m-Y');
+            $hora   =  Carbon::now()->format('H:i:s');
+
             $a                      =   json_decode ($datos->estudiante);
             $estudiante             =   Estudiante::find($a->cedula_es);
 
             $a                      =   json_decode ($datos->turno);
             $turno                  =   Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'),$a->fecha)->where('inicio_tu',$a->inicio)->where('fin_tu',$a->fin)->where('id_et',1)->first();
 
-            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',2)->first();
+            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',2)->where('fecha_tu','>=',$dia)->where('inicio_tu','>',$hora)->first();
             if($tiene)
                 return (['val'=>false,'mensaje'=>"Ya tiene un turno asignado, refresque la página"]);
             if($turno){
