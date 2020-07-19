@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Estudiante;
 use App\Turno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class EstudiantesController extends Controller
@@ -43,6 +44,8 @@ class EstudiantesController extends Controller
             $nuevo->celular_es = $datos->celular;
             $nuevo->telefono_es = $datos->telefono;
             $nuevo->save();
+            $cubiculo = @Auth::user()->name;
+            $this->registro->logTxt("$cubiculo registró al estudiante $nuevo->cedula_es");
             return (['val' => true, 'mensaje' => "Se ha registrado $nuevo->cedula_es correctamente"]);
         }
 

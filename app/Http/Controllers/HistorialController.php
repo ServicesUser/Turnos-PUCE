@@ -38,4 +38,12 @@ class HistorialController extends Controller
         $nuevo->detalle_ht = $log ? (string)$log : (string)$cadena;
         $nuevo->save();
     }
+
+    public function logTxt($log=null)
+    {
+        $nuevo = new Historia();
+        $nuevo->id = @Auth::user()->id;
+        $nuevo->detalle_ht = (string)$log;
+        $nuevo->save();
+    }
 }
