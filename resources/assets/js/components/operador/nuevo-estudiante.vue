@@ -19,7 +19,7 @@
                                 <textarea name="nombre" placeholder="Apellido1 Apellido2 Nombre1 Nombre2" v-model="formulario.nombre" cols="2" rows="2" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
-                                <label><span class="text-danger">*</span> Correo electrónico</label>
+                                <label> Correo electrónico</label>
                                 <input type="email" v-model="formulario.correo" class="form-control" placeholder="nombre@dgepuce.edu.ec">
                             </div>
                             <div class="form-group">
