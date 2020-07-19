@@ -9,6 +9,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import JsonExcel from 'vue-json-excel';
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -17,6 +20,9 @@ window.Vue = require('vue');
 
 Vue.component('dispensador', require('./components/turnero'));
 Vue.component('dispensador2', require('./components/turnero2'));
+
+Vue.component('downloadExcel', JsonExcel);
+
 
 const turnero = new Vue({
     el: '#turnero'
