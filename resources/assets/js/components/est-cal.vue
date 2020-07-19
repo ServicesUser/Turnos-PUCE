@@ -2,7 +2,9 @@
     <vue-event-calendar :events="lista" title="Turnos disponibles">
         <template slot-scope="props">
             <div v-for="(event, index) in props.showEvents" class="event-item">
-                <small>{{event.fecha}} {{event.inicio}} a {{event.fin}}</small>
+                <small>
+                {{event.fecha}} {{event.inicio}} a {{event.fin}} ({{event.detalle_cu}})
+                </small>
                 <button class="btn btn-circle green btn-outline btn-sm" v-on:click="reserva(event)">Reservar</button>
             </div>
         </template>

@@ -7,7 +7,8 @@
                         <div class="portlet-body">
                             <div class="text-center">
                                 <div class="m-login__welcome center-block">
-                                    <object type="image/svg+xml" :data="imagen" class="img-responsive" style="max-height: 50px"></object>
+                                    <object type="image/svg+xml" :data="imagen" class="img-responsive"
+                                            style="max-height: 50px"></object>
                                 </div>
                             </div>
                             <div class="row">
@@ -15,17 +16,20 @@
                                     <div class="form-group">
                                         <label class="sr-only">Módulo</label>
                                         <select class="form-control" v-model="modulo">
-                                            <option v-for="item in modulos" :value="item.id_cu">{{item.detalle_cu}}</option>
+                                            <option v-for="item in modulos" :value="item.id_cu">{{item.detalle_cu}}
+                                            </option>
                                             <option :value="0">Todos</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only">Fecha inicio</label>
-                                        <input type="date" class="form-control" placeholder="yyyy-mm-dd" v-model="fechaInicio">
+                                        <input type="date" class="form-control" placeholder="yyyy-mm-dd"
+                                               v-model="fechaInicio">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only">Fecha fin</label>
-                                        <input type="date" class="form-control" placeholder="yyyy-mm-dd" v-model="fechaFin">
+                                        <input type="date" class="form-control" placeholder="yyyy-mm-dd"
+                                               v-model="fechaFin">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only">Desde</label>
@@ -40,12 +44,12 @@
 
                                     <template v-if="json_data.length > 0">
                                         <download-excel
-                                                class   = "btn btn-success"
-                                                name    = "Reporte.xls"
-                                                :data   = "json_data"
-                                                :fields = "json_fields"
+                                                class="btn btn-success"
+                                                name="Reporte.xls"
+                                                :data="json_data"
+                                                :fields="json_fields"
                                         >
-                                            Exportar en Excel    <i class="far fa-file-excel"></i>
+                                            Exportar en Excel <i class="far fa-file-excel"></i>
                                         </download-excel>
                                     </template>
 
@@ -56,30 +60,34 @@
                                 <div class="col-md-6">
                                     <div class="list-group">
                                         <a href="javascript:;" class="list-group-item" v-for="item in lista.toca">
-                                            <h4 class="list-group-item-heading"><b>{{item.inicio_tu}} {{item.detalle_cu}}</b></h4>
-                                            <p class="list-group-item-text">{{item.nombres_es}} {{item.apellidos_es}}</p>
+                                            <h4 class="list-group-item-heading"><b>{{item.inicio_tu}}
+                                                {{item.detalle_cu}}</b></h4>
+                                            <p class="list-group-item-text">{{item.nombres_es}}
+                                                {{item.apellidos_es}}</p>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="list-group">
-                                        <a href="javascript:;" class="list-group-item danger" v-for="item in lista.paso" :class="item.id_et===3 ? 'list-group-item-success' : item.id_et===1 ? 'list-group-item-warning' : 'list-group-item-danger'">
+                                        <a href="javascript:;" class="list-group-item danger" v-for="item in lista.paso"
+                                           :class="item.id_et===3 ? 'list-group-item-success' : item.id_et===1 ? 'list-group-item-warning' : 'list-group-item-danger'">
                                             <h4 class="list-group-item-heading">
                                                 <b>{{item.inicio_tu}} {{item.detalle_cu}}</b>
                                             </h4>
                                             <p class="list-group-item-text">
-                                                {{item.nombres_es}} {{item.apellidos_es}} <span class="label" :class="item.id_et===3 ? 'label-success' : 'label-danger'">{{item.nombre_et}}</span>
+                                                {{item.nombres_es}} {{item.apellidos_es}} <span class="label"
+                                                                                                :class="item.id_et===3 ? 'label-success' : 'label-danger'">{{item.nombre_et}}</span>
                                             </p>
                                         </a>
                                     </div>
                                     <div v-if="json_data.length > 0">
                                         <download-excel
-                                                class   = "btn btn-success"
-                                                name    = "Reporte.xls"
-                                                :data   = "json_data"
-                                                :fields = "json_fields"
+                                                class="btn btn-success"
+                                                name="Reporte.xls"
+                                                :data="json_data"
+                                                :fields="json_fields"
                                         >
-                                            Exportar en Excel    <i class="far fa-file-excel"></i>
+                                            Exportar en Excel <i class="far fa-file-excel"></i>
                                         </download-excel>
                                     </div>
                                 </div>
@@ -87,32 +95,31 @@
                         </div>
                     </div>
                 </fullscreen>
-                <button type="button" @click="toggle" class="btn btn-default boton" :class="fullscreen ? 'full' : ''"><i class="fa" :class="[fullscreen ? 'fa-window-close-o' : 'fa-arrows-alt']"></i></button>
+                <button type="button" @click="toggle" class="btn btn-default boton" :class="fullscreen ? 'full' : ''"><i
+                        class="fa" :class="[fullscreen ? 'fa-window-close-o' : 'fa-arrows-alt']"></i></button>
             </div>
         </div>
 
     </div>
 
 
-
-
-
 </template>
 
 <script>
     import fullscreen from 'vue-fullscreen';
+
     Vue.use(fullscreen);
     export default {
         name: "turnero",
         data: () => ({
-            lista:[],
+            lista: [],
             fullscreen: false,
-            fechaInicio:null,
-            fechaFin:null,
-            desde:null,
-            hasta:null,
-            modulo:null,
-            modulos:[],
+            fechaInicio: null,
+            fechaFin: null,
+            desde: null,
+            hasta: null,
+            modulo: null,
+            modulos: [],
 
 
             json_fields: {
@@ -127,12 +134,12 @@
                         let apellido = "";
                         let nombreApellido = "";
 
-                        if(element.nombres_es != null && element.nombres_es !== undefined){
+                        if (element.nombres_es != null && element.nombres_es !== undefined) {
                             nombreApellido += element.nombres_es;
                         }
 
-                        if(element.apellidos_es != null && element.apellidos_es !== undefined){
-                            nombreApellido += " " +element.apellidos_es;
+                        if (element.apellidos_es != null && element.apellidos_es !== undefined) {
+                            nombreApellido += " " + element.apellidos_es;
                         }
 
                         return reemplazarConGuion(nombreApellido);
@@ -140,11 +147,10 @@
                 },
                 'Fecha de entrevista': 'fecha_tu',
                 'Hora de entrevista': 'inicio_tu',
-                'Módulo de entrevista' : 'detalle_cu',
-                'atendido/no atendido' : 'nombre_et'
+                'Módulo de entrevista': 'detalle_cu',
+                'atendido/no atendido': 'nombre_et'
             },
-            json_data: [
-            ],
+            json_data: [],
             json_meta: [
                 [
                     {
@@ -155,66 +161,64 @@
             ],
 
         }),
-        watch:{
-        },
-        computed:{
-            imagen:function(){
-                return location.origin+'/images/logo_puce.svg';
+        watch: {},
+        computed: {
+            imagen: function () {
+                return location.origin + '/images/logo_puce.svg';
             }
         },
-        methods:{
-            enviar:function(){
+        methods: {
+            enviar: function () {
                 axios({
                     method: 'POST',
-                    url:location.origin+location.pathname,
+                    url: location.origin + location.pathname,
                     params: {
-                        'fechaInicio':this.fechaInicio,
-                        'fechaFin':this.fechaFin,
-                        'desde':this.desde,
-                        'hasta':this.hasta,
-                        'modulo':this.modulo,
+                        'fechaInicio': this.fechaInicio,
+                        'fechaFin': this.fechaFin,
+                        'desde': this.desde,
+                        'hasta': this.hasta,
+                        'modulo': this.modulo,
                     },
                 }).then((response) => {
-                    if(response.data.val){
-                        this.lista=response.data;
+                    if (response.data.val) {
+                        this.lista = response.data;
                         this.json_data = response.data.paso;
-                    }
-                    else
+                    } else
                         toastr.error(response.data.mensaje, "Error");
 
                 }).catch((error) => {
                     toastr.error("Ha ocurrido un error refresque la página", "Error");
                 });
             },
-            toggle:function() {
+            toggle: function () {
                 this.$refs['fullscreen'].toggle();
             },
-            fullscreenChange:function(fullscreen) {
+            fullscreenChange: function (fullscreen) {
                 this.fullscreen = fullscreen
             },
-            cargarCu:function(){
-                axios.options(window.location.origin+location.pathname)
+            cargarCu: function () {
+                axios.options(window.location.origin + location.pathname)
                     .then((response) => {
-                        this.modulos=response.data;
+                        this.modulos = response.data;
                     });
             },
-            cargar:function(){
-                axios.get(window.location.origin+'/api/realtime')
+            cargar: function () {
+                axios.get(window.location.origin + '/api/realtime')
                     .then((response) => {
-                        this.lista=response.data;
+                        this.lista = response.data;
                     });
             },
 
         },
-        mounted(){
+        mounted() {
             this.cargarCu();
         }
     }
 
-    function  reemplazarConGuion(value){
-        if (value == null | value === undefined  ) {
+    function reemplazarConGuion(value) {
+        if (value == null | value === undefined) {
             return "-";
-        }else if(value.trim() == ""){
+        } else if (value.trim() == "") {
             return "-";
         }
 
@@ -224,7 +228,7 @@
 </script>
 
 <style scoped>
-    .boton{
+    .boton {
         position: absolute;
         right: 10px;
         bottom: 10px;
@@ -236,13 +240,15 @@
         text-align: center;
         outline: none;
     }
-    .full{
+
+    .full {
         left: 10px;
         top: 10px;
         right: auto;
         bottom: auto;
     }
-    .portlet-body{
+
+    .portlet-body {
         min-height: 100% !important;
     }
 
