@@ -24,6 +24,16 @@
                     </li>
                 </ul>
             </li>
+            <li class="dropdown dropdown-fw dropdown-fw-disabled" v-bind:class="[actual===menu.estudiante ? 'active open selected' :'']">
+                <a href="javascript:;" class="text-uppercase">
+                    <i class="fa fa-graduation-cap"></i> Estudiantes
+                </a>
+                <ul class="dropdown-menu dropdown-menu-fw">
+                    <li :class="actual===menu.estudiante ? 'active' : ''">
+                        <a :href="menu.estudiante">Nuevo/Estado</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </template>

@@ -25,4 +25,8 @@ class Turno extends Model
         return $this->hasOne(Estudiante::class,'cedula_es','cedula_es');
     }
 
+    public function estado(){
+        return $this->hasOne(Estado::class,'id_et','id_et');
+    }
+
 }

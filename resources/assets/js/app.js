@@ -1,4 +1,5 @@
-
+// import '@babel/polyfill';
+// import '@babel/preset-env';
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -28,6 +29,8 @@ Vue.component('citas', require('./components/operador/citas'));
 Vue.component('feed', require('./components/operador/feed'));
 Vue.component('parametros', require('./components/operador/zoom'));
 Vue.component('contrasena', require('./components/operador/contrasena'));
+Vue.component('nuevo-estudiante', require('./components/operador/nuevo-estudiante'));
+Vue.component('turnos-estudiante', require('./components/operador/turnos-estudiante'));
 
 
 Vue.component('estudiante', require('./components/estudiante'));

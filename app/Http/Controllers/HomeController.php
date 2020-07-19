@@ -30,7 +30,12 @@ class HomeController extends Controller
             'user'              =>  Auth::user(),
             'notificaciones'    =>  $this->notifiaciones(),
             'logout'            =>  route('logout'),
-            'menu'              =>  ['historial'=>route('home'),'horarios'=>route('turnos.horarios'),'citas'=>route('turnos.citas')],
+            'menu'              =>  [
+                'historial' =>  route('home'),
+                'horarios'  =>  route('turnos.horarios'),
+                'citas'     =>  route('turnos.citas'),
+                'estudiante'=>  route('estudiantes'),
+            ],
         ]);
     }
 
