@@ -18,150 +18,153 @@ class EstudianteController extends Controller
 
     public function __construct(HistorialController $registro)
     {
-        $this->registro     =   $registro;
+        $this->registro = $registro;
     }
 
-    public function consultar(Request $datos){
-        $fecha      =   Date::now()->format('Y-m-d');
-        $estudainte =   Estudiante::find($datos->dni);
-        if(!$estudainte){
+    public function consultar(Request $datos)
+    {
+        $fecha = Date::now()->format('Y-m-d');
+        $estudainte = Estudiante::find($datos->dni);
+        if (!$estudainte) {
             return app('App\Http\Controllers\ConsultaApiController')->guardar($datos->dni);
-        }else{
-            $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudainte->cedula_es)->where('id_et',2)->first();
-            $estudainte =   collect($estudainte)->put('turno', $turno);
+        } else {
+            $turno = Turno::where('fecha_tu', '>=', $fecha)->where('cedula_es', $estudainte->cedula_es)->where('id_et', 2)->first();
+            $estudainte = collect($estudainte)->put('turno', $turno);
             return $estudainte;
         }
     }
 
-    public function consultarPublico(Request $datos){
+    public function consultarPublico(Request $datos)
+    {
         $validacion = Validator::make($datos->all(), [
-            'dni'                 =>  'required|max:10',
-            'apellidos'  =>  'required',
-            'nombres'  =>  'required',
-            'celular'  =>  'required',
+            'dni' => 'required|max:10',
+            'nombres' => 'required',
         ]);
         if ($validacion->fails()) {
-            $mensaje="";
+            $mensaje = "";
             foreach ($validacion->errors()->all() as $item)
-                $mensaje.="$item</br>";
-            return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
-        }else{
-            $fecha      =   Date::now()->format('Y-m-d');
-            $estudiante =   Estudiante::find($datos->dni);
-            if(!$estudiante){
-                $estudiante              =   new Estudiante();
-                $estudiante->cedula_es   =   $datos->dni;
-                $estudiante->nombres_es  =   $datos->apellidos." ".$datos->nombres;
-                $estudiante->celular_es  =   $datos->celular;
-                $estudiante->telefono_es =   $datos->telefono;
-                $estudiante->publico_es  =   true;
+                $mensaje .= "$item</br>";
+            return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
+        } else {
+            $fecha = Date::now()->format('Y-m-d');
+            $estudiante = Estudiante::find($datos->dni);
+            if (!$estudiante) {
+                $estudiante = new Estudiante();
+                $estudiante->nombres_es = $datos->nombres;
+                $estudiante->celular_es = $datos->celular;
+                $estudiante->telefono_es = $datos->telefono;
+                $estudiante->publico_es = true;
                 $estudiante->save();
-                $estudiante              =   collect($estudiante)->put('turno', null);
-            }else{
-                $estudiante->cedula_es   =   $datos->dni;
-                $estudiante->nombres_es  =   $datos->apellidos." ".$datos->nombres;
-                $estudiante->celular_es  =   $datos->celular;
-                $estudiante->telefono_es =   $datos->telefono;
-                $estudiante->publico_es  =   true;
+                $estudiante = collect($estudiante)->put('turno', null);
+            } else {
+                $estudiante->cedula_es = $datos->dni;
+                $estudiante->nombres_es = $datos->nombres;
+                $estudiante->celular_es = $datos->celular;
+                $estudiante->telefono_es = $datos->telefono;
+                $estudiante->publico_es = true;
                 $estudiante->save();
-                $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudiante->cedula_es)->where('id_et',2)->first();
-                $estudiante =   collect($estudiante)->put('turno', $turno);
+                $turno = Turno::where('fecha_tu', '>=', $fecha)->where('cedula_es', $estudiante->cedula_es)->where('id_et', 2)->first();
+                $estudiante = collect($estudiante)->put('turno', $turno);
             }
-            return (['val'=>true,'mensaje'=>'Se creó','data'=>$estudiante]);
+            return (['val' => true, 'mensaje' => 'Se creó', 'data' => $estudiante]);
         }
     }
 
-    public function eliminarTurno(Request $datos){
+    public function eliminarTurno(Request $datos)
+    {
         $validacion = Validator::make($datos->all(), [
-            'turno.id_tu'  =>  'exists:turnos,id_tu'
+            'turno.id_tu' => 'exists:turnos,id_tu'
         ]);
         if ($validacion->fails()) {
-            $mensaje="";
+            $mensaje = "";
             foreach ($validacion->errors()->all() as $item)
-                $mensaje.="$item</br>";
-            return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
-        }else{
-            $a                      =   json_decode ($datos->turno);
-            $aux                    =   Turno::find($a->id_tu);
-            $this->registro->log($aux,1);
-            $aux->id_et             =   1;
-            $aux->cedula_es         =   null;
+                $mensaje .= "$item</br>";
+            return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
+        } else {
+            $a = json_decode($datos->turno);
+            $aux = Turno::find($a->id_tu);
+            $this->registro->log($aux, 1);
+            $aux->id_et = 1;
+            $aux->cedula_es = null;
             $aux->save();
-            return (['val'=>true,'mensaje'=>"Se ha eliminado tu reserva ".$aux->fecha_tu." a las ".$aux->inicio_tu]);
+            return (['val' => true, 'mensaje' => "Se ha eliminado tu reserva " . $aux->fecha_tu . " a las " . $aux->inicio_tu]);
         }
     }
 
-    public function actualizar(Request $datos){
+    public function actualizar(Request $datos)
+    {
         $validacion = Validator::make($datos->all(), [
-            'email'                 =>  'required|email',
-            'estudiante.cedula_es'  =>  'exists:estudiantes,cedula_es'
+            'email' => 'required|email',
+            'estudiante.cedula_es' => 'exists:estudiantes,cedula_es'
         ]);
         if ($validacion->fails()) {
-            $mensaje="";
+            $mensaje = "";
             foreach ($validacion->errors()->all() as $item)
-                $mensaje.="$item</br>";
-            return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
-        }else{
-            $a                      =   json_decode ($datos->estudiante);
-            $aux                    =   Estudiante::where('cedula_es',$a->cedula_es)->first();
-            $aux->email_es          =   strtolower($datos->email);
-            $aux->validado_es       =   true;
+                $mensaje .= "$item</br>";
+            return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
+        } else {
+            $a = json_decode($datos->estudiante);
+            $aux = Estudiante::where('cedula_es', $a->cedula_es)->first();
+            $aux->email_es = strtolower($datos->email);
+            $aux->validado_es = true;
             $aux->save();
-            return (['val'=>true,'mensaje'=>"Se ha actualizado su correo electrónico"]);
+            return (['val' => true, 'mensaje' => "Se ha actualizado su correo electrónico"]);
         }
     }
 
-    public function turno(Request $datos){
+    public function turno(Request $datos)
+    {
         $validacion = Validator::make($datos->all(), [
-            'estudiante.cedula_es'  =>  'exists:estudiantes,cedula_es',
-            'fecha'                 =>  'required|date',
-            'turno'                 =>  'required'
+            'estudiante.cedula_es' => 'exists:estudiantes,cedula_es',
+            'fecha' => 'required|date',
+            'turno' => 'required'
         ]);
         if ($validacion->fails()) {
-            $mensaje="";
+            $mensaje = "";
             foreach ($validacion->errors()->all() as $item)
-                $mensaje.="$item</br>";
-            return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
-        }else{
-            $dia    =  Carbon::now()->format('Y-m-d');
-            $hora   =  Carbon::now()->format('H:i:s');
+                $mensaje .= "$item</br>";
+            return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
+        } else {
+            $dia = Carbon::now()->format('Y-m-d');
+            $hora = Carbon::now()->format('H:i:s');
 
-            $a                      =   json_decode ($datos->estudiante);
-            $estudiante             =   Estudiante::find($a->cedula_es);
+            $a = json_decode($datos->estudiante);
+            $estudiante = Estudiante::find($a->cedula_es);
 
-            $a                      =   json_decode ($datos->turno);
-            $turno                  =   Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'),$a->fecha)->where('inicio_tu',$a->inicio)->where('fin_tu',$a->fin)->where('id_et',1)->first();
+            $a = json_decode($datos->turno);
+            $turno = Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'), $a->fecha)->where('inicio_tu', $a->inicio)->where('fin_tu', $a->fin)->where('id_et', 1)->first();
 
-            $tiene                  =   Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et',2)->whereDate('fecha_tu','>=',$dia)->whereDate('inicio_tu','>',$hora)->first();
-            if($tiene)
-                return (['val'=>false,'mensaje'=>"Ya tiene un turno asignado, refresque la página"]);
-            if($turno){
-                $turno->cedula_es   =   $estudiante->cedula_es;
-                $turno->id_et       =   2;
+            $tiene = Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et', 2)->whereDate('fecha_tu', '>=', $dia)->whereDate('inicio_tu', '>', $hora)->first();
+            if ($tiene)
+                return (['val' => false, 'mensaje' => "Ya tiene un turno asignado, refresque la página"]);
+            if ($turno) {
+                $turno->cedula_es = $estudiante->cedula_es;
+                $turno->id_et = 2;
                 $turno->save();
                 $this->registro->log($turno);
-                return (['val'=>true,'mensaje'=>"Se le ha asignado un turno, se envió un correo electrónico a $estudiante->email_es  con la información"]);
-            }else{
-                return (['val'=>false,'mensaje'=>"No existe cupos disponibles para la fecha seleccionada"]);
+                return (['val' => true, 'mensaje' => "Se le ha asignado un turno, se envió un correo electrónico a $estudiante->email_es  con la información"]);
+            } else {
+                return (['val' => false, 'mensaje' => "No existe cupos disponibles para la fecha seleccionada"]);
             }
         }
     }
 
-    public function verificar(Request $datos){
+    public function verificar(Request $datos)
+    {
         $validacion = Validator::make($datos->all(), [
-            'estudiante.cedula_es'  =>  'exists:estudiantes,cedula_es',
+            'estudiante.cedula_es' => 'exists:estudiantes,cedula_es',
         ]);
         if ($validacion->fails()) {
-            $mensaje="";
+            $mensaje = "";
             foreach ($validacion->errors()->all() as $item)
-                $mensaje.="$item</br>";
-            return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
-        }else{
-            $a                      =   json_decode ($datos->estudiante);
-            $estudiante             =   Estudiante::find($a->cedula_es);
+                $mensaje .= "$item</br>";
+            return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
+        } else {
+            $a = json_decode($datos->estudiante);
+            $estudiante = Estudiante::find($a->cedula_es);
 
-            $tiene                  =   Turno::with('horario')->with('antendio')->where('cedula_es', $estudiante->cedula_es)->first();
-            if($tiene)
+            $tiene = Turno::with('horario')->with('antendio')->where('cedula_es', $estudiante->cedula_es)->first();
+            if ($tiene)
                 Notification::send($estudiante, new ConfirmacionTurno($tiene));
             return $tiene;
         }

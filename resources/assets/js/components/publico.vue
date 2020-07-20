@@ -7,7 +7,7 @@
                         <div class="form-body">
                             <div class="alert" :class="mensaje.tipo" v-html="mensaje.texto"></div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-3 control-label">Cédula/Pasaporte
+                                <label class="col-md-3 control-label">Número de identificación
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-8">
@@ -16,7 +16,7 @@
                                 </div>
                             </div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-3 control-label">Nombres
+                                <label class="col-md-3 control-label">Nombre completo
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-8">
@@ -25,18 +25,7 @@
                                 </div>
                             </div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-3 control-label">Apellidos
-                                    <span class="required" aria-required="true">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" placeholder="Smith" name="text" v-model="apellidos">
-                                    <div class="form-control-focus"> </div>
-                                </div>
-                            </div>
-                            <div class="form-group form-md-line-input">
-                                <label class="col-md-3 control-label">Celular
-                                    <span class="required" aria-required="true">*</span>
-                                </label>
+                                <label class="col-md-3 control-label">Celular</label>
                                 <div class="col-md-8">
                                     <input type="tel" class="form-control" placeholder="0998988998" name="text" v-model="celular">
                                     <div class="form-control-focus"> </div>
@@ -80,7 +69,7 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" class="btn green">Enviar</button>
+                                    <button type="submit" class="btn green" :disabled="cargando">Enviar</button>
                                 </div>
                             </div>
                         </div>
@@ -174,6 +163,7 @@
             },
             consultar:function(){
                 if(this.ci!==''){
+                    this.cargando=true;
                     axios({
                         method: 'POST',
                         url:location.origin+'/api/publico',
@@ -185,6 +175,7 @@
                             'telefono':this.telefono,
                         }
                     }).then((response) => {
+                        this.cargando=false;
                         if(response.data.val){
                             this.estudiante=response.data.data;
                             if(!response.data.turno){
@@ -209,6 +200,7 @@
                             this.mensaje.texto='Complete el formulario';
                         }
                     }).catch((error) => {
+                        this.cargando=false;
                         toastr.error("Ha ocurrido un error refresque la página", "Error");
                     });
                 }else{
