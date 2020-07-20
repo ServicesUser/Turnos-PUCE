@@ -24,5 +24,6 @@ Route::patch('estudiantes','EstudianteController@actualizar');
 Route::delete('estudiantes','EstudianteController@turno');
 Route::options('estudiantes','EstudianteController@verificar');
 Route::put('estudiantes','EstudianteController@eliminarTurno');
+Route::post('publico','EstudianteController@consultarPublico');
 
 Route::get('realtime','TurneroController@tiemporeal');

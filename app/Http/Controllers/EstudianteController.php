@@ -33,6 +33,44 @@ class EstudianteController extends Controller
         }
     }
 
+    public function consultarPublico(Request $datos){
+        $validacion = Validator::make($datos->all(), [
+            'dni'                 =>  'required|max:10',
+            'apellidos'  =>  'required',
+            'nombres'  =>  'required',
+            'celular'  =>  'required',
+        ]);
+        if ($validacion->fails()) {
+            $mensaje="";
+            foreach ($validacion->errors()->all() as $item)
+                $mensaje.="$item</br>";
+            return (['val'=>false,'mensaje'=>$mensaje,'errores'=>$validacion->errors()->all()]);
+        }else{
+            $fecha      =   Date::now()->format('Y-m-d');
+            $estudiante =   Estudiante::find($datos->dni);
+            if(!$estudiante){
+                $estudiante              =   new Estudiante();
+                $estudiante->cedula_es   =   $datos->dni;
+                $estudiante->nombres_es  =   $datos->apellidos." ".$datos->nombres;
+                $estudiante->celular_es  =   $datos->celular;
+                $estudiante->telefono_es =   $datos->telefono;
+                $estudiante->publico_es  =   true;
+                $estudiante->save();
+                $estudiante              =   collect($estudiante)->put('turno', null);
+            }else{
+                $estudiante->cedula_es   =   $datos->dni;
+                $estudiante->nombres_es  =   $datos->apellidos." ".$datos->nombres;
+                $estudiante->celular_es  =   $datos->celular;
+                $estudiante->telefono_es =   $datos->telefono;
+                $estudiante->publico_es  =   true;
+                $estudiante->save();
+                $turno      =   Turno::where('fecha_tu','>=',$fecha)->where('cedula_es',$estudiante->cedula_es)->where('id_et',2)->first();
+                $estudiante =   collect($estudiante)->put('turno', $turno);
+            }
+            return (['val'=>true,'mensaje'=>'Se creó','data'=>$estudiante]);
+        }
+    }
+
     public function eliminarTurno(Request $datos){
         $validacion = Validator::make($datos->all(), [
             'turno.id_tu'  =>  'exists:turnos,id_tu'

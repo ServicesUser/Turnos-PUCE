@@ -34,6 +34,7 @@ Vue.component('turnos-estudiante', require('./components/operador/turnos-estudia
 
 
 Vue.component('estudiante', require('./components/estudiante'));
+Vue.component('publico', require('./components/publico'));
 
 export let Bus = new Vue();
 

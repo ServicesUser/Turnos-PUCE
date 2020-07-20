@@ -1,5 +1,9 @@
 @extends('template.estudiante')
 @section('titulo') Reservación @endsection
 @section('cuerpo')
-    <estudiante></estudiante>
+    @if (env('PUBLICO'))
+        <publico></publico>
+    @else
+        <estudiante></estudiante>
+    @endif
 @endsection

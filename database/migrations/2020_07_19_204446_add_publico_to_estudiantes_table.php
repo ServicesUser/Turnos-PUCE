@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddZoomToCubiculoTable extends Migration
+class AddPublicoToEstudiantesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddZoomToCubiculoTable extends Migration
      */
     public function up()
     {
-        Schema::table('cubiculos', function (Blueprint $table) {
-            $table->string('link_cu')->nullable();
+        Schema::table('estudiantes', function (Blueprint $table) {
+            $table->boolean('publico_es')->default(false);
         });
     }
 
@@ -25,8 +25,8 @@ class AddZoomToCubiculoTable extends Migration
      */
     public function down()
     {
-        Schema::table('cubiculos', function (Blueprint $table) {
-            $table->dropColumn('link_cu');
+        Schema::table('estudiantes', function (Blueprint $table) {
+            $table->dropColumn('publico_es');
         });
     }
 }
