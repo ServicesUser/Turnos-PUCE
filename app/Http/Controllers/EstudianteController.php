@@ -50,6 +50,7 @@ class EstudianteController extends Controller
             $estudiante = Estudiante::find($datos->dni);
             if (!$estudiante) {
                 $estudiante = new Estudiante();
+                $estudiante->cedula_es = $datos->dni;
                 $estudiante->nombres_es = $datos->nombres;
                 $estudiante->celular_es = $datos->celular;
                 $estudiante->telefono_es = $datos->telefono;
@@ -57,10 +58,9 @@ class EstudianteController extends Controller
                 $estudiante->save();
                 $estudiante = collect($estudiante)->put('turno', null);
             } else {
-                $estudiante->cedula_es = $datos->dni;
                 $estudiante->nombres_es = $datos->nombres;
-                $estudiante->celular_es = $datos->celular;
-                $estudiante->telefono_es = $datos->telefono;
+                $estudiante->celular_es = $datos->celular ? $datos->celular  : $estudiante->celular_es;
+                $estudiante->telefono_es = $datos->telefono? $datos->telefono : $estudiante->telefono_es;
                 $estudiante->publico_es = true;
                 $estudiante->save();
                 $turno = Turno::where('fecha_tu', '>=', $fecha)->where('cedula_es', $estudiante->cedula_es)->where('id_et', 2)->first();
