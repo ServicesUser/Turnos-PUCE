@@ -80,6 +80,7 @@
             pendientes:0,
             completos:0,
         }),
+        props:['ide'],
         methods:{
             comprobar:function() {
                 let self = this;
@@ -112,11 +113,11 @@
                         'estado':accion
                     }
                 }).then((response) => {
-                    this.consulta();
                     if(response.data.val)
                         toastr.info(response.mensaje, "Éxito");
                     else
                         toastr.error(response.mensaje, "Error");
+                    this.consulta();
                 }).catch((error) => {
                     toastr.error("Ha ocurrido un error refresque la página", "Error");
                 });
@@ -126,8 +127,12 @@
         mounted(){
             this.time();
             this.comprobar();
+            Echo.private('modulo.'+this.ide)
+                .listen('ModuloUpdate',(e) => {
+                    this.consulta();
+                });
         },
-        created(){
+        created() {
             this.consulta();
         }
     }

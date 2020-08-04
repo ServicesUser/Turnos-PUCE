@@ -153,7 +153,7 @@
                 axios({
                     method: 'OPTIONS',
                     url:location.origin+'/api/estudiantes',
-                    params:{
+                    data:{
                         'estudiante':this.estudiante,
                     }
                 }).then((response) => {
@@ -167,7 +167,7 @@
                     axios({
                         method: 'POST',
                         url:location.origin+'/api/publico',
-                        params:{
+                        data:{
                             'dni':this.ci,
                             'nombres':this.nombres,
                             'apellidos':this.apellidos,
@@ -178,9 +178,9 @@
                         this.cargando=false;
                         if(response.data.val){
                             this.estudiante=response.data.data;
-                            if(!response.data.turno){
-                                this.correo=response.data.email_es;
-                                if(response.data.validado_es){
+                            if(this.estudiante.turno===null){
+                                this.correo=this.estudiante.email_es;
+                                if(this.estudiante.validado_es){
                                     this.pasos=3;
                                     this.mensaje.tipo='alert-info';
                                     this.mensaje.texto='Elija una fecha y presione en <b>Reservar</b>';
@@ -213,7 +213,7 @@
                 axios({
                     method: 'PUT',
                     url:location.origin+'/api/estudiantes',
-                    params:{
+                    data:{
                         'turno':this.turno,
                     }
                 }).then((response) => {
@@ -231,7 +231,7 @@
                     axios({
                         method: 'PATCH',
                         url:location.origin+'/api/estudiantes',
-                        params:{
+                        data:{
                             'estudiante':this.estudiante,
                             'email':this.correo
                         }

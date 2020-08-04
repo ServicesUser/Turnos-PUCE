@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Estudiante;
+use App\Events\ModuloUpdate;
+use App\Events\Turno as Notificacion;
 use App\Notifications\ConfirmacionTurno;
 use App\Turno;
 use Carbon\Carbon;
@@ -46,7 +48,6 @@ class EstudianteController extends Controller
                 $mensaje .= "$item</br>";
             return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
         } else {
-            $fecha = Date::now()->format('Y-m-d');
             $estudiante = Estudiante::find($datos->dni);
             if (!$estudiante) {
                 $estudiante = new Estudiante();
@@ -56,16 +57,15 @@ class EstudianteController extends Controller
                 $estudiante->telefono_es = $datos->telefono;
                 $estudiante->publico_es = true;
                 $estudiante->save();
-                $estudiante = collect($estudiante)->put('turno', null);
             } else {
                 $estudiante->nombres_es = $datos->nombres;
                 $estudiante->celular_es = $datos->celular ? $datos->celular  : $estudiante->celular_es;
                 $estudiante->telefono_es = $datos->telefono? $datos->telefono : $estudiante->telefono_es;
                 $estudiante->publico_es = true;
                 $estudiante->save();
-                $turno = Turno::where('fecha_tu', '>=', $fecha)->where('cedula_es', $estudiante->cedula_es)->where('id_et', 2)->first();
-                $estudiante = collect($estudiante)->put('turno', $turno);
             }
+            $turno = Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et', 2)->first();
+            $estudiante = collect($estudiante)->put('turno', $turno);
             return (['val' => true, 'mensaje' => 'Se creó', 'data' => $estudiante]);
         }
     }
@@ -81,12 +81,13 @@ class EstudianteController extends Controller
                 $mensaje .= "$item</br>";
             return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
         } else {
-            $a = json_decode($datos->turno);
-            $aux = Turno::find($a->id_tu);
+            $aux = Turno::find($datos->turno['id_tu']);
             $this->registro->log($aux, 1);
             $aux->id_et = 1;
             $aux->cedula_es = null;
             $aux->save();
+            event(new ModuloUpdate($aux->horario->responsable));
+            event(new Notificacion($aux));
             return (['val' => true, 'mensaje' => "Se ha eliminado tu reserva " . $aux->fecha_tu . " a las " . $aux->inicio_tu]);
         }
     }
@@ -95,7 +96,8 @@ class EstudianteController extends Controller
     {
         $validacion = Validator::make($datos->all(), [
             'email' => 'required|email',
-            'estudiante.cedula_es' => 'exists:estudiantes,cedula_es'
+            'estudiante.cedula_es' => 'exists:estudiantes,cedula_es',
+            'estudiante.turno.id_tu' => 'exists:turnos,id_tu'
         ]);
         if ($validacion->fails()) {
             $mensaje = "";
@@ -103,8 +105,7 @@ class EstudianteController extends Controller
                 $mensaje .= "$item</br>";
             return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
         } else {
-            $a = json_decode($datos->estudiante);
-            $aux = Estudiante::where('cedula_es', $a->cedula_es)->first();
+            $aux = Estudiante::find($datos->estudiante['cedula_es']);
             $aux->email_es = strtolower($datos->email);
             $aux->validado_es = true;
             $aux->save();
@@ -142,6 +143,8 @@ class EstudianteController extends Controller
                 $turno->id_et = 2;
                 $turno->save();
                 $this->registro->log($turno);
+                event(new ModuloUpdate($turno->horario->responsable));
+                event(new Notificacion($turno));
                 return (['val' => true, 'mensaje' => "Se le ha asignado un turno, se envió un correo electrónico a $estudiante->email_es  con la información"]);
             } else {
                 return (['val' => false, 'mensaje' => "No existe cupos disponibles para la fecha seleccionada"]);
@@ -160,9 +163,7 @@ class EstudianteController extends Controller
                 $mensaje .= "$item</br>";
             return (['val' => false, 'mensaje' => $mensaje, 'errores' => $validacion->errors()->all()]);
         } else {
-            $a = json_decode($datos->estudiante);
-            $estudiante = Estudiante::find($a->cedula_es);
-
+            $estudiante = Estudiante::find($datos->estudiante['cedula_es']);
             $tiene = Turno::with('horario')->with('antendio')->where('cedula_es', $estudiante->cedula_es)->first();
             if ($tiene)
                 Notification::send($estudiante, new ConfirmacionTurno($tiene));

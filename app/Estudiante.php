@@ -14,6 +14,10 @@ class Estudiante extends Model
     public $timestamps          =   false;
 
     //protected $with =   ['turno'];
+    
+    protected $casts = [
+      'validado_es' => 'bool'
+    ];
 
     public function routeNotificationForMail($notification)
     {

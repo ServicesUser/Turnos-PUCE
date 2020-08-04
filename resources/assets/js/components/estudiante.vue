@@ -125,7 +125,7 @@
                 axios({
                     method: 'OPTIONS',
                     url:location.origin+'/api/estudiantes',
-                    params:{
+                    data:{
                         'estudiante':this.estudiante,
                     }
                 }).then((response) => {
@@ -138,15 +138,15 @@
                     axios({
                         method: 'POST',
                         url:location.origin+'/api/estudiantes',
-                        params:{
+                        data:{
                             'dni':this.ci
                         }
                     }).then((response) => {
                         if(response.data){
                             this.estudiante=response.data;
-                            if(response.data.turno===null){
-                                this.correo=response.data.email_es;
-                                if(response.data.validado_es){
+                            if(this.estudiante.turno===null){
+                                this.correo=this.estudiante.email_es;
+                                if(this.estudiante.validado_es){
                                    this.pasos=3;
                                     this.mensaje.tipo='alert-info';
                                     this.mensaje.texto='Elija una fecha y presione en <b>Reservar</b>';
@@ -179,7 +179,7 @@
                 axios({
                     method: 'PUT',
                     url:location.origin+'/api/estudiantes',
-                    params:{
+                    data:{
                         'turno':this.turno,
                     }
                 }).then((response) => {
@@ -197,7 +197,7 @@
                     axios({
                         method: 'PATCH',
                         url:location.origin+'/api/estudiantes',
-                        params:{
+                        data:{
                             'estudiante':this.estudiante,
                             'email':this.correo
                         }

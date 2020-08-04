@@ -93,7 +93,7 @@ class HorariosController extends Controller{
                 }
             } catch (\Exception $e) {
                 DB::rollback();
-                return (['val' => false, 'mensaje' => $e->getMessage()]);
+                return (['val' => false, 'mensaje' => "Ya tiene un horario registrado con esos parámetros"]);
             }
         }
     }

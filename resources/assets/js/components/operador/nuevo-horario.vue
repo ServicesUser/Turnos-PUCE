@@ -66,29 +66,24 @@
                     if (result) {
                         let inicio=this.inicio.split(':');
                         let fin=this.fin.split(':');
-                        if(parseInt(fin[0])>parseInt(inicio[0])){
-                            axios({
-                                method: 'POST',
-                                url:location.origin+location.pathname,
-                                params: {
-                                    'fecha':this.fecha,
-                                    'inicio':this.inicio,
-                                    'fin':this.fin,
-                                },
-                            }).then((response) => {
-                                if(response.data.val){
-                                    Bus.$emit('cargar-horarios');
-                                    toastr.info(response.data.mensaje, "Éxito");
-                                }else{
-                                    toastr.error(response.data.mensaje, "Error");
-                                }
-                            }).catch((error) => {
-                                toastr.error("Ha ocurrido un error refresque la página", "Error");
-                            });
-
-                        }else{
-                            toastr.error("La Hora debe ser posterior hora de inicio debe ser menor a la hora de fin", "Error");
-                        }
+                        axios({
+                            method: 'POST',
+                            url:location.origin+location.pathname,
+                            params: {
+                                'fecha':this.fecha,
+                                'inicio':this.inicio,
+                                'fin':this.fin,
+                            },
+                        }).then((response) => {
+                            if(response.data.val){
+                                Bus.$emit('cargar-horarios');
+                                toastr.info(response.data.mensaje, "Éxito");
+                            }else{
+                                toastr.error(response.data.mensaje, "Error");
+                            }
+                        }).catch((error) => {
+                            toastr.error("Ha ocurrido un error refresque la página", "Error");
+                        });
                     }else {
                         toastr.error("Complete el formulario", "Error");
                     }

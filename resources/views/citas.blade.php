@@ -2,6 +2,6 @@
 @section('titulo')Agenda @endsection
 @section('cuerpo')
     <div class="row">
-        <citas></citas>
+        <citas ide="{{Auth::user()->id}}"></citas>
     </div>
 @endsection
