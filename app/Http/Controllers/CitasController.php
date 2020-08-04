@@ -23,8 +23,8 @@ class CitasController extends Controller
     public function cola(){
         $usuario    =   Auth::user()->id;
         $fecha      =   Date::now()->format('Y-m-d');
-        $pendientes =   DB::select("SELECT turnos.id_tu,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es FROM turnos natural join horarios natural join dias natural join users natural join estudiantes where fecha_di=$fecha and id_et=2 and users.id=$usuario order by inicio_tu");
-        $completos  =   DB::select("SELECT turnos.id_tu,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es FROM turnos natural join horarios natural join dias natural join users natural join estudiantes where fecha_di=$fecha and id_et=3 and users.id=$usuario order by inicio_tu");
+        $pendientes =   DB::select("SELECT turnos.id_tu,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es FROM turnos natural join horarios natural join dias natural join users natural join estudiantes where fecha_di=DATE_FORMAT('$fecha','%Y-%m-%d') and id_et=2 and users.id=$usuario order by inicio_tu");
+        $completos  =   DB::select("SELECT turnos.id_tu,inicio_tu,fin_tu,estudiantes.cedula_es,nombres_es,apellidos_es,email_es FROM turnos natural join horarios natural join dias natural join users natural join estudiantes where fecha_di=DATE_FORMAT('$fecha','%Y-%m-%d') and id_et=3 and users.id=$usuario order by inicio_tu");
 
         return ([
             'pendeientes'   =>  count($pendientes),
