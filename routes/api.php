@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('turnos','HorariosController@disponibles');
+Route::get('tipos','ConsultaApiController@tipos');
 Route::post('estudiantes','EstudianteController@consultar');
 Route::patch('estudiantes','EstudianteController@actualizar');
 Route::delete('estudiantes','EstudianteController@turno');

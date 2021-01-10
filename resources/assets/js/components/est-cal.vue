@@ -22,7 +22,7 @@
             fecha:moment().format('YYYY/MM/DD'),
         }),
 
-        props:['estudiante'],
+        props:['estudiante','observacion','tipo'],
         methods:{
             cargar:function(){
                 axios({
@@ -41,15 +41,17 @@
                 axios({
                     method: 'DELETE',
                     url:location.origin+'/api/estudiantes',
-                    params:{
+                    data:{
                         'estudiante':this.estudiante,
                         'fecha':turno.fecha,
-                        'turno':turno
+                        'turno':turno,
+                        'tipo':this.tipo.id_ti,
+                        'observacion':this.observacion,
                     }
                 }).then((response) => {
                     if(response.data.val){
                         toastr.info(response.data.mensaje, "Éxito");
-                        Bus.$emit('cambiar-paso',4);
+                        Bus.$emit('cambiar-paso',5);
                     }else{
                         toastr.error(response.data.mensaje, "Error");
                     }

@@ -73,7 +73,7 @@ class EstudianteController extends Controller
     public function eliminarTurno(Request $datos)
     {
         $validacion = Validator::make($datos->all(), [
-            'turno.id_tu' => 'exists:turnos,id_tu'
+            'turno.id_tu'   => 'exists:turnos,id_tu'
         ]);
         if ($validacion->fails()) {
             $mensaje = "";
@@ -84,6 +84,8 @@ class EstudianteController extends Controller
             $aux = Turno::find($datos->turno['id_tu']);
             $this->registro->log($aux, 1);
             $aux->id_et = 1;
+            $aux->id_ti = null;
+            $aux->obs_tu= null;
             $aux->cedula_es = null;
             $aux->save();
             event(new ModuloUpdate($aux->horario->responsable));
@@ -97,7 +99,7 @@ class EstudianteController extends Controller
         $validacion = Validator::make($datos->all(), [
             'email' => 'required|email',
             'estudiante.cedula_es' => 'exists:estudiantes,cedula_es',
-            'estudiante.turno.id_tu' => 'exists:turnos,id_tu'
+            'estudiante.turno.id_tu' => 'exists:turnos,id_tu',
         ]);
         if ($validacion->fails()) {
             $mensaje = "";
@@ -118,7 +120,9 @@ class EstudianteController extends Controller
         $validacion = Validator::make($datos->all(), [
             'estudiante.cedula_es' => 'exists:estudiantes,cedula_es',
             'fecha' => 'required|date',
-            'turno' => 'required'
+            'turno' => 'required',
+            'tipo'          => 'required|exists:tipos,id_ti',
+            'observacion'   => 'nullable'
         ]);
         if ($validacion->fails()) {
             $mensaje = "";
@@ -129,11 +133,11 @@ class EstudianteController extends Controller
             $dia = Carbon::now()->format('Y-m-d');
             $hora = Carbon::now()->format('H:i:s');
 
-            $a = json_decode($datos->estudiante);
-            $estudiante = Estudiante::find($a->cedula_es);
+            $a = $datos->estudiante;
+            $estudiante = Estudiante::find($a['cedula_es']);
 
-            $a = json_decode($datos->turno);
-            $turno = Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'), $a->fecha)->where('inicio_tu', $a->inicio)->where('fin_tu', $a->fin)->where('id_et', 1)->first();
+            $a = $datos->turno;
+            $turno = Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'), $a['fecha'])->where('inicio_tu', $a['inicio'])->where('fin_tu', $a['fin'])->where('id_et', 1)->first();
 
             $tiene = Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et', 2)->whereDate('fecha_tu', '>=', $dia)->whereDate('inicio_tu', '>', $hora)->first();
             if ($tiene)
@@ -141,6 +145,8 @@ class EstudianteController extends Controller
             if ($turno) {
                 $turno->cedula_es = $estudiante->cedula_es;
                 $turno->id_et = 2;
+                $turno->id_ti = $datos->tipo;
+                $turno->obs_tu= $datos->observacion;
                 $turno->save();
                 $this->registro->log($turno);
                 event(new ModuloUpdate($turno->horario->responsable));

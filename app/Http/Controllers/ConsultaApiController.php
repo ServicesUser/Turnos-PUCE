@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Estudiante;
+use App\Tipo;
 use Illuminate\Http\Request;
 use Unirest\Request as Consulta;
 
@@ -36,4 +37,9 @@ class ConsultaApiController extends Controller
         }
         return $nuevo;
     }
+
+    public function tipos(){
+        return Tipo::all();
+    }
+
 }

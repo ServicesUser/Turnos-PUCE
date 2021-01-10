@@ -42,7 +42,10 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" class="btn green">Enviar</button>
+                                    <button type="submit" class="btn green" :disabled="cargando">
+                                        <i class="fa fa-spinner fa-pulse fa-fw" v-if="cargando"></i>
+                                        Enviar
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-md-offset-3" v-if="pasos===2">
+        <div class="col-md-6 col-md-offset-3" v-else-if="pasos===2">
             <div class="portlet light portlet-fit portlet-form bordered">
                 <div class="portlet-body">
                     <form action="#" class="form-horizontal" novalidate="novalidate" v-on:submit.prevent="actualizar">
@@ -77,15 +80,52 @@
                 </div>
             </div>
         </div>
-        <div v-if="pasos===3">
+        <div class="col-md-6 col-md-offset-3" v-else-if="pasos===3">
             <div class="portlet light portlet-fit portlet-form bordered">
                 <div class="portlet-body">
-                    <div class="alert text-center" :class="mensaje.tipo" v-html="mensaje.texto"></div>
-                    <est-cal :estudiante="estudiante"></est-cal>
+                    <form action="#" class="form-horizontal" novalidate="novalidate" v-on:submit.prevent="validarDetalles">
+                        <div class="form-body">
+                            <div class="alert alert-info"> Completa los campos con asterisco</div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-3 control-label">Escoge una opción
+                                    <span class="required" aria-required="true">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="radio" v-for="item in tipos">
+                                        <label>
+                                            <input type="radio" name="tipo" :value="item" v-model="tipo">
+                                            {{item.detalle_ti}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-3 control-label">Detalle del requerimiento (opcional)</label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control" rows="3" v-model="observacion"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn green">Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-md-offset-3" v-if="pasos===4">
+        <div v-else-if="pasos===4">
+            <div class="portlet light portlet-fit portlet-form bordered">
+                <div class="portlet-body">
+                    <div class="alert text-center" :class="mensaje.tipo" v-html="mensaje.texto"></div>
+                    <est-cal :estudiante="estudiante" :tipo="tipo" :observacion="observacion"></est-cal>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-md-offset-3" v-else-if="pasos===5">
             <div class="portlet light portlet-fit portlet-form bordered">
                 <div class="portlet-body" v-if="cargando">
                     <div class="alert text-center" :class="mensaje.tipo" v-html="mensaje.texto"></div>
@@ -126,6 +166,8 @@
             pasos:1,
             ci:'',
             correo:'',
+            tipo:{id_ti:null},
+            observacion:null,
             mensaje:{tipo:'alert-info',texto:'Ingrese sus datos'},
             turno:[],
             cargando:false,
@@ -135,10 +177,11 @@
             apellidos:null,
             celular:null,
             telefono:null,
+            tipos: [],
         }),
         watch:{
             pasos:function(val){
-                if(val===4){
+                if(val===5){
                     this.verificar();
                 }
             }
@@ -190,7 +233,7 @@
                                     this.mensaje.texto='Ingrese su correo electrónico';
                                 }
                             }else{
-                                this.pasos=4;
+                                this.pasos=5;
                                 this.mensaje.tipo='alert-info';
                                 this.mensaje.texto='La información de su turno';
                             }
@@ -206,6 +249,13 @@
                 }else{
                     toastr.error("Ingrese una identificación válida", "Error");
                     this.mensaje.tipo='alert-danger';
+                }
+            },
+            validarDetalles:function(){
+                if(this.tipo.id_ti>0){
+                    this.pasos++;
+                }else{
+                    toastr.error("Completa el formulario", "Error");
                 }
             },
             eliminar:function(){
@@ -249,9 +299,18 @@
                 }else{
                     toastr.error("Ingrese un correo electrónico válido", "Error");
                 }
+            },
+            cargarTipos: function(){
+                axios({
+                    method: 'GET',
+                    url:location.origin+'/api/tipos',
+                }).then((response) => {
+                    this.tipos=response.data;
+                });
             }
         },
         mounted(){
+            this.cargarTipos();
             Bus.$on('cambiar-paso',function(paso){
                 this.pasos=paso;
             }.bind(this));
