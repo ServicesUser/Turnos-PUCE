@@ -64,12 +64,16 @@ class TurneroController extends Controller
                                 email_es,
                                 detalle_cu,
                                 fecha_tu,
-                                nombre_et FROM turnos 
+                                nombre_et,
+                                detalle_ti,
+                                obs_tu
+                                FROM turnos 
                                                 natural join horarios 
                                                 natural join users 
                                                 natural join estudiantes 
                                                 natural join  cubiculos 
                                                 natural join estado_turno 
+                                                left join tipos on tipos.id_ti=turnos.id_ti 
                                                 where 
                                                 DATE_FORMAT(CONCAT(fecha_tu,' ',inicio_tu), '%Y-%m-%d %H:%i:%s') >=DATE_FORMAT('$fecha','%Y-%m-%d %H:%i:%s')
 
@@ -94,13 +98,16 @@ class TurneroController extends Controller
                             email_es,
                             detalle_cu,
                             fecha_tu,
-                            nombre_et 
+                            nombre_et,
+                            detalle_ti,
+                            obs_tu
                             FROM turnos 
                                 natural join horarios 
                                 natural join users 
                                 natural join  cubiculos 
                                 natural join estado_turno 
                                 left join estudiantes on estudiantes.cedula_es = turnos.cedula_es 
+                                left join tipos on tipos.id_ti=turnos.id_ti 
                             where 
                                 DATE_FORMAT(CONCAT(fecha_tu,' ',fin_tu), '%Y-%m-%d %H:%i:%s') >= DATE_FORMAT('$fecha','%Y-%m-%d %H:%i:%s')
                                 and

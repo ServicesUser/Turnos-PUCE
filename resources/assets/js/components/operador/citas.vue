@@ -48,10 +48,18 @@
                                 <br>{{item.fin_tu}}</div>
                             <div class="list-item-content">
                                 <h3 class="uppercase bold">
-                                    <a href="javascript:;">{{item.apellidos_es}} {{item.nombres_es}}</a>
+                                    <a>{{item.apellidos_es}} {{item.nombres_es}}</a>
                                     <a :href="'mailto:'+item.email_es">{{item.email_es}}</a>
-                                    <a href="javascript:;">{{item.cedula_es}}</a>
+                                    <a>{{item.cedula_es}}</a>
                                 </h3>
+                                <div>
+                                    <b class="text-muted">
+                                        {{item.detalle_ti}}
+                                    </b>
+                                    <p class="text-muted p-0" v-if="item.obs_tu">
+                                        {{item.obs_tu}}
+                                    </p>
+                                </div>
                                 <div class="btn-group btn-group-solid" v-if="tiempo>=item.inicio_tu">
                                     <button type="button" class="btn btn-success" v-on:click="cambiar(3,item)">
                                         Atendido <i class="fa fa-arrow-right"></i></button>
@@ -139,5 +147,4 @@
 </script>
 
 <style scoped>
-
 </style>

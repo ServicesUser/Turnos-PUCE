@@ -42,34 +42,54 @@
                                     <button type="submit" class="btn btn-default">Consultar</button>
 
 
-                                    <template v-if="json_data.length > 0">
+                                    <template v-if="lista.paso.length > 0">
                                         <download-excel
                                                 class="btn btn-success"
-                                                name="Reporte.xls"
-                                                :data="json_data"
+                                                name="Reporte_de_Atendidos.xls"
+                                                :data="lista.paso"
                                                 :fields="json_fields"
                                         >
-                                            Exportar en Excel <i class="far fa-file-excel"></i>
+                                            <i class="fa fa-file-excel-o"></i> Atendidos
                                         </download-excel>
                                     </template>
 
+                                    <template v-if="lista.toca.length > 0">
+                                        <download-excel
+                                                class="btn btn-success"
+                                                name="Reporte_de_Agendados.xls"
+                                                :data="lista.toca"
+                                                :fields="json_fields"
+                                        >
+                                            <i class="fa fa-file-excel-o"></i> Agendados
+                                        </download-excel>
+                                    </template>
                                 </form>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="list-group">
-                                        <a href="javascript:;" class="list-group-item" v-for="item in lista.toca">
+                                        <a class="list-group-item" v-for="item in lista.toca">
                                             <h4 class="list-group-item-heading"><b>{{item.inicio_tu}}
                                                 {{item.detalle_cu}}</b></h4>
                                             <p class="list-group-item-text">{{item.nombres_es}}
                                                 {{item.apellidos_es}}</p>
                                         </a>
                                     </div>
+                                    <div v-if="lista.toca.length > 0">
+                                        <download-excel
+                                                class="btn btn-success"
+                                                name="Reporte_de_Agendados.xls"
+                                                :data="lista.toca"
+                                                :fields="json_fields"
+                                        >
+                                            <i class="fa fa-file-excel-o"></i> Exportar en Excel los Agendados
+                                        </download-excel>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="list-group">
-                                        <a href="javascript:;" class="list-group-item danger" v-for="item in lista.paso"
+                                        <a class="list-group-item danger" v-for="item in lista.paso"
                                            :class="item.id_et===3 ? 'list-group-item-success' : item.id_et===1 ? 'list-group-item-warning' : 'list-group-item-danger'">
                                             <h4 class="list-group-item-heading">
                                                 <b>{{item.inicio_tu}} {{item.detalle_cu}}</b>
@@ -80,14 +100,14 @@
                                             </p>
                                         </a>
                                     </div>
-                                    <div v-if="json_data.length > 0">
+                                    <div v-if="lista.paso.length > 0">
                                         <download-excel
                                                 class="btn btn-success"
-                                                name="Reporte.xls"
-                                                :data="json_data"
+                                                name="Reporte_de_Atendidos.xls"
+                                                :data="lista.paso"
                                                 :fields="json_fields"
                                         >
-                                            Exportar en Excel <i class="far fa-file-excel"></i>
+                                            <i class="fa fa-file-excel-o"></i> Exportar en Excel los Atendidos
                                         </download-excel>
                                     </div>
                                 </div>
@@ -112,7 +132,10 @@
     export default {
         name: "turnero",
         data: () => ({
-            lista: [],
+            lista: {
+                paso: [],
+                toca: [],
+            },
             fullscreen: false,
             fechaInicio: null,
             fechaFin: null,
@@ -145,21 +168,21 @@
                         return reemplazarConGuion(nombreApellido);
                     }
                 },
+                'Escoge opción': 'detalle_ti',
+                'Detalle del requerimiento': 'obs_tu',
                 'Fecha de entrevista': 'fecha_tu',
                 'Hora de entrevista': 'inicio_tu',
                 'Módulo de entrevista': 'detalle_cu',
                 'atendido/no atendido': 'nombre_et'
             },
-            json_data: [],
             json_meta: [
                 [
                     {
-                        'key': 'charset',
-                        'value': 'utf-8'
-                    }
-                ]
+                        key: "charset",
+                        value: "utf-8",
+                    },
+                ],
             ],
-
         }),
         watch: {},
         computed: {
@@ -182,7 +205,6 @@
                 }).then((response) => {
                     if (response.data.val) {
                         this.lista = response.data;
-                        this.json_data = response.data.paso;
                     } else
                         toastr.error(response.data.mensaje, "Error");
 
