@@ -2,8 +2,12 @@
 @section('titulo') Reservación @endsection
 @section('cuerpo')
     @if (env('PUBLICO'))
-        <publico></publico>
+        <publico
+                paso4="{{ (int)config('app.paso') }}"
+        />
     @else
-        <estudiante></estudiante>
+        <estudiante
+                paso4="{{ (int)config('app.paso') }}"
+        />
     @endif
 @endsection

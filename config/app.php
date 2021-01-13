@@ -28,6 +28,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'paso' => env('PASO_EXTRA', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

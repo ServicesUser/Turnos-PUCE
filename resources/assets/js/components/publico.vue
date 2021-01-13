@@ -128,21 +128,26 @@
         <div class="col-md-6 col-md-offset-3" v-else-if="pasos===5">
             <div class="portlet light portlet-fit portlet-form bordered">
                 <div class="portlet-body" v-if="cargando">
-                    <div class="alert text-center" :class="mensaje.tipo" v-html="mensaje.texto"></div>
-                    <div class="mt-widget-3">
-                        <div class="mt-head bg-green">
-                            <div class="mt-head-icon">
-                                <i class="fa fa-bullhorn"></i>
-                            </div>
-                            <div class="mt-head-desc"><b>Su turno es a las {{turno.inicio_tu}}</b> <br>Recuerde estar 10 minutos antes</div>
-                            <span class="mt-head-date">{{fechaCompleta}}</span>
-                            <div class="mt-head-button" >
-                                <h3>{{turno.horario.responsable.cubiculo.detalle_cu ? turno.horario.responsable.cubiculo.detalle_cu :turno.atendido.cubiculo.detalle_cu}}</h3>
-                                <br>
-                                <a v-if="turno.horario.responsable.cubiculo.link_cu" :href="turno.horario.responsable.cubiculo.link_cu" class="btn btn-primary" target="_blank">ZOOM</a>
-                            </div>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-circle red" v-on:click="eliminar" :disabled="loadDel" >Eliminar Reserva</button>
+                    <div class="p-4">
+                        <div class="alert text-center" :class="mensaje.tipo" v-html="mensaje.texto"></div>
+                        <div class="mt-widget-3">
+                            <div class="mt-head bg-green">
+                                <div class="mt-head-icon">
+                                    <i class="fa fa-bullhorn"></i>
+                                </div>
+                                <div class="mt-head-desc"><b>Su turno es a las {{turno.inicio_tu}}</b> <br>Recuerde estar 10 minutos antes</div>
+                                <span class="mt-head-date">{{fechaCompleta}}</span>
+                                <div class="mt-head-button" >
+                                    <h3>{{turno.horario.responsable.cubiculo.detalle_cu ? turno.horario.responsable.cubiculo.detalle_cu :turno.atendido.cubiculo.detalle_cu}}</h3>
+                                    <br>
+                                    <a v-if="turno.horario.responsable.cubiculo.link_cu" :href="turno.horario.responsable.cubiculo.link_cu" class="btn btn-primary" target="_blank">ZOOM</a>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-circle red" v-on:click="eliminar" :disabled="loadDel" >
+                                        <i class="fa fa-spinner fa-pulse fa-fw" v-if="loadDel"></i>
+                                        Eliminar Reserva
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -179,6 +184,13 @@
             telefono:null,
             tipos: [],
         }),
+        props:{
+            paso4:{
+                default:false,
+                required: false,
+                type: [Boolean,String]
+            }
+        },
         watch:{
             pasos:function(val){
                 if(val===5){
@@ -224,7 +236,7 @@
                             if(this.estudiante.turno===null){
                                 this.correo=this.estudiante.email_es;
                                 if(this.estudiante.validado_es){
-                                    this.pasos=3;
+                                    this.pasos=parseInt(this.paso4) ? 3 : 4;
                                     this.mensaje.tipo='alert-info';
                                     this.mensaje.texto='Elija una fecha y presione en <b>Reservar</b>';
                                 }else{
@@ -287,7 +299,7 @@
                         }
                     }).then((response) => {
                         if(response.data.val){
-                            this.pasos=3;
+                            this.pasos=parseInt(this.paso4) ? 3 : 4;
                             this.mensaje.tipo='alert-info';
                             this.mensaje.texto='Elija una fecha y presione en <b>Reservar</b>';
                         }else{
