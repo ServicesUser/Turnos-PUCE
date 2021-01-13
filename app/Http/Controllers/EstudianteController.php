@@ -121,7 +121,7 @@ class EstudianteController extends Controller
             'estudiante.cedula_es' => 'exists:estudiantes,cedula_es',
             'fecha' => 'required|date',
             'turno' => 'required',
-            'tipo'          => 'required|exists:tipos,id_ti',
+            'tipo'          => 'nullable|exists:tipos,id_ti',
             'observacion'   => 'nullable'
         ]);
         if ($validacion->fails()) {
