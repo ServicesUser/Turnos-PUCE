@@ -30,6 +30,7 @@
 </template>
 
 <script>
+    import {Bus} from '../../app'
     import moment from "moment";
     moment.locale("es");
     export default {
@@ -91,6 +92,9 @@
         },
         created() {
             this.consultar();
+            Bus.$on('cargar-horarios',function(){
+                this.consultar();
+            }.bind(this));
         }
     }
 </script>
