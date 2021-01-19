@@ -10,6 +10,11 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueSweetalert2 from 'vue-sweetalert2';
+
+
+Vue.use(VueSweetalert2);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -12,7 +12,7 @@
                         <fieldset :disabled="cargando">
                             <div class="form-group">
                                 <label>Zoom Link</label>
-                                <input type="url" v-model="formulario.zoom" class="form-control" placeholder="Disabled input">
+                                <input type="url" v-model="formulario.zoom" class="form-control" placeholder="https://zoom.us/">
                             </div>
                             <button type="submit" class="btn btn-primary">Actualizar</button>
                         </fieldset>

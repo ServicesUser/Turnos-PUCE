@@ -26,6 +26,9 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/', 'HomeController@horarios')->name('turnos.horarios');
         Route::options('/','HorariosController@misHorarios');
         Route::post('/','HorariosController@nuevoHorario');
+
+        Route::put('/', 'ConfiguracionController@consultaTurnos');
+        Route::delete('/', 'ConfiguracionController@eliminarTurnos');
     });
 
     Route::prefix('/turnos/citas')->group(function () {
