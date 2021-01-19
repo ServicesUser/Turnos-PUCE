@@ -81,7 +81,7 @@ class ConfiguracionController extends Controller
                 Historia::where('id_tu',$turno->id_tu)->update(['id_tu' => null]);
                 $log = new Historia();
                 $log->id = $usuario;
-                $log->detalle_ht = "Ha eliminado el turno $item del $turno->fecha_tu  $turno->inicio_tu";
+                $log->detalle_ht = Auth::user()->name." ha eliminado el turno $item del $turno->fecha_tu  $turno->inicio_tu";
                 $log->save();
                 $turno->delete();
             }
