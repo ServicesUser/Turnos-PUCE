@@ -109,7 +109,8 @@ class HorariosController extends Controller{
             DB::raw('DATE_FORMAT(CONCAT(fecha_tu," ",fin_tu), "%Y-%m-%d %H:%i") AS endDate '),
             DB::raw('DATE_FORMAT(fin_tu, "%H:%i") AS  fin'),
             DB::raw('DATE_FORMAT(CONCAT(fecha_tu," ",inicio_tu), "%Y/%m/%d %H:%i") AS date'),
-            DB::raw('COUNT(id_tu) as cupos')
+            DB::raw('COUNT(id_tu) as cupos'),
+            'horarios.id_ho as id'
         )
             ->leftJoin('horarios','horarios.id_ho','=','turnos.id_ho')
             ->leftJoin('users','users.id','=','horarios.id')
@@ -123,7 +124,7 @@ class HorariosController extends Controller{
             )
             ->orderBy('fecha_tu','asc')
             ->orderBy('inicio_tu','asc')
-            ->groupBy('fecha_tu','inicio_tu','fin_tu','cubiculos.id_cu','cubiculos.detalle_cu')
+            ->groupBy('fecha_tu','inicio_tu','fin_tu','cubiculos.id_cu','cubiculos.detalle_cu','horarios.id_ho')
             ->get();
         return $disponibles;
 

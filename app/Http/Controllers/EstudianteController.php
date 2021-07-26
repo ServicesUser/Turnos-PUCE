@@ -119,6 +119,7 @@ class EstudianteController extends Controller
     {
         $validacion = Validator::make($datos->all(), [
             'estudiante.cedula_es' => 'exists:estudiantes,cedula_es',
+            'turno.id' => 'exists:horarios,id_ho',
             'fecha' => 'required|date',
             'turno' => 'required',
             'tipo'          => 'nullable|exists:tipos,id_ti',
@@ -137,7 +138,7 @@ class EstudianteController extends Controller
             $estudiante = Estudiante::find($a['cedula_es']);
 
             $a = $datos->turno;
-            $turno = Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'), $a['fecha'])->where('inicio_tu', $a['inicio'])->where('fin_tu', $a['fin'])->where('id_et', 1)->first();
+            $turno = Turno::where(DB::raw('DATE_FORMAT(fecha_tu, "%d-%m-%Y")'), $a['fecha'])->where('inicio_tu', $a['inicio'])->where('fin_tu', $a['fin'])->where('id_ho',$a['id'])->where('id_et', 1)->first();
 
             $tiene = Turno::where('cedula_es', $estudiante->cedula_es)->where('id_et', 2)->whereDate('fecha_tu', '>=', $dia)->whereDate('inicio_tu', '>', $hora)->first();
             if ($tiene)
