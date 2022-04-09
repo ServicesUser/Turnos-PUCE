@@ -28,7 +28,7 @@
         "daterangepicker": "^2.1.27",
         "font-awesome": "^4.7.0",
         "laravel-echo": "^1.4.0",
-        "moment": "^2.27.0",
+        "moment": "^2.29.2",
         "morris.js": "^0.5.0",
         "pusher-js": "^4.2.2",
         "simple-line-icons": "^2.4.1",
