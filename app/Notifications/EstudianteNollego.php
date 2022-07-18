@@ -43,6 +43,7 @@ class EstudianteNollego extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('Estudiante no llegó')
                     ->level('error')
                     ->greeting('Hola '.$notifiable->nombres_es)
                     ->line('No haz llegado a tu cita agendada')
