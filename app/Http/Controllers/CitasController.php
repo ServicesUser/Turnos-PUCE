@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Estudiante;
 use App\Events\Turno as Notificacion;
 use App\Historia;
 use App\Horario;
+use App\Notifications\EstudianteNollego;
 use App\Turno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Jenssegers\Date\Date;
 
 class CitasController extends Controller
@@ -41,6 +44,10 @@ class CitasController extends Controller
             $turno->save();
             $this->registro->log($turno,$datos->estado);
             event(new Notificacion($turno));
+            if( $datos->estado=5){
+                $tiene = Turno::with('horario')->with('antendio')->find($datos->id);
+                Notification::send($turno->estudiante, new EstudianteNollego($tiene));
+            }
             return (['val' => true,'mensaje'=>'Se a guardado correctamente']);
         }
         return (['val' => false,'mensaje'=>'Ha ocurrido un error vuelva a cargar la página']);
