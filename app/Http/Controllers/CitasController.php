@@ -44,7 +44,7 @@ class CitasController extends Controller
             $turno->save();
             $this->registro->log($turno,$datos->estado);
             event(new Notificacion($turno));
-            if( $datos->estado=5){
+            if( $datos->estado===5){
                 $tiene = Turno::with('horario')->with('antendio')->find($datos->id);
                 Notification::send($turno->estudiante, new EstudianteNollego($tiene));
             }
